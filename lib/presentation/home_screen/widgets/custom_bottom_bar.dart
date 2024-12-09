@@ -1,7 +1,8 @@
+import 'package:facein/application/bottom_navigation_cubit/bottom_navigation_cubit.dart';
 import 'package:facein/core/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../home_screen.dart';
 
 class CustomBar extends StatelessWidget {
   const CustomBar({
@@ -18,7 +19,7 @@ class CustomBar extends StatelessWidget {
         unselectedItemColor: const Color.fromARGB(255, 228, 196, 14),
         backgroundColor: AppColors.primaryColor,
         onTap: (value) {
-          indexNotifier.value = value;
+          context.read<BottomNavigationCubit>().onChangeIndex(value);
         },
         currentIndex: currentIndex,
         items: const [

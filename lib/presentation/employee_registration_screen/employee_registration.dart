@@ -1,15 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:facein/core/camera_controllers.dart';
 import 'package:facein/core/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/app_sizes.dart';
 import '../../data/employee_model.dart';
 import '../../domain/funtions.dart';
-import '../../main.dart';
 import '../home_screen/home_screen.dart';
 import '../widgets/submit_button_widget.dart';
 import 'camera_screen.dart';
@@ -76,19 +74,13 @@ class _EmployeeRegistrationState extends State<EmployeeRegistration> {
                   onTake: () async {
                     final scaffoldMessenger = ScaffoldMessenger.of(context);
                     final nav = Navigator.of(context);
-                    cameras = await availableCameras();
-                    CameraController controller = CameraController(
-                      cameras[1],
-                      ResolutionPreset.medium,
-                      imageFormatGroup: ImageFormatGroup.jpeg,
-                    );
-                    await controller.initialize();
+
                     scaffoldMessenger.showSnackBar(customSnackbar(
                         content: const Text('Wait for 5 seconds')));
                     final res = await nav.push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            CameraScreen(controller: controller),
+                            CameraScreen(controller: captureController),
                       ),
                     );
                     setState(() {
@@ -99,19 +91,13 @@ class _EmployeeRegistrationState extends State<EmployeeRegistration> {
                   onRetake: () async {
                     final scaffoldMessenger = ScaffoldMessenger.of(context);
                     final nav = Navigator.of(context);
-                    cameras = await availableCameras();
-                    CameraController controller = CameraController(
-                      cameras[1],
-                      ResolutionPreset.medium,
-                      imageFormatGroup: ImageFormatGroup.jpeg,
-                    );
-                    await controller.initialize();
+
                     scaffoldMessenger.showSnackBar(customSnackbar(
                         content: const Text('Wait for 5 seconds')));
                     final res = await nav.push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            CameraScreen(controller: controller),
+                            CameraScreen(controller: captureController),
                       ),
                     );
                     setState(() {

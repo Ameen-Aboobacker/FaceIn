@@ -1,4 +1,6 @@
+import 'package:facein/application/bottom_navigation_cubit/bottom_navigation_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/custom_bottom_bar.dart';
 import '../employee_details_screen/employees_screen.dart';
@@ -18,13 +20,12 @@ class HomeScreen extends StatelessWidget {
       EmployeesScreen(),
     ];
 
-    return ValueListenableBuilder(
-      valueListenable: indexNotifier,
-      builder: (context, int index, _) {
+    return BlocBuilder<BottomNavigationCubit, int>(
+      builder: (context, state) {
         return Scaffold(
-          body: pages[index],
+          body: pages[state],
           backgroundColor: Colors.white,
-          bottomNavigationBar: CustomBar(currentIndex: index),
+          bottomNavigationBar: CustomBar(currentIndex: state),
         );
       },
     );
