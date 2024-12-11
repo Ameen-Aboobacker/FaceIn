@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../core/aws_constants.dart';
+import 'package:facein/core/aws_constants.dart';
 import '../data/employee_model.dart';
 import 'dart:developer';
 
