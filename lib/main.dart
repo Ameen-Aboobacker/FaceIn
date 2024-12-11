@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:camera/camera.dart';
+import 'package:facein/application/capture_image_cubit/capture_image_cubit.dart';
 import 'package:facein/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ import 'presentation/splash_screen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   cameras = await availableCameras();
   log(cameras.length.toString());
   await captureController.initialize();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BottomNavigationCubit()),
         BlocProvider(create: (context) => EmployeeRegistrationBloc()),
         BlocProvider(create: (context) => FaceScanningBloc()),
+        BlocProvider(create: (context) => CaptureImageCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

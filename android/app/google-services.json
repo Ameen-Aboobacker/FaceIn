@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "762925092204",
-    "project_id": "attendance-master-b1b2f",
-    "storage_bucket": "attendance-master-b1b2f.firebasestorage.app"
+    "project_number": "254732391880",
+    "project_id": "facein-f99bd",
+    "storage_bucket": "facein-f99bd.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:762925092204:android:52f62e32a7ef456f713749",
-        "android_client_info": {
-          "package_name": "com.advance.attendance_master"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB-6tZMBTFophxcf4dbrm8yt05a0S3fIXk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:762925092204:android:789cf2cd0d52c64f713749",
+        "mobilesdk_app_id": "1:254732391880:android:3978e83dd3c8d438485cfd",
         "android_client_info": {
           "package_name": "com.example.facein"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB-6tZMBTFophxcf4dbrm8yt05a0S3fIXk"
+          "current_key": "AIzaSyA9imKAZoXT7QaJwlGCqT44PDmS7P6Jr6U"
         }
       ],
       "services": {

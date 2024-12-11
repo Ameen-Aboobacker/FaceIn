@@ -1,16 +1,16 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Employee {
   String id;
-  final String image;
+  String image;
+  String faceId;
   final String name;
   final String employeeId;
   final String email;
   final String contact;
   final Timestamp? createdAt;
   Employee({
+    this.faceId = '',
     this.id = '',
     this.image = 'assets/images/user_icon.jpg',
     required this.name,
@@ -26,7 +26,9 @@ class Employee {
       'email': email,
       'contact': contact,
       'id': id,
-     'createdAt': createdAt
+      'createdAt': createdAt,
+      'image': image,
+      'faceId': faceId
     };
   }
 
@@ -40,6 +42,8 @@ class Employee {
       email: employeeData['email'],
       contact: employeeData['contact'],
       createdAt: employeeData['createdAt'],
+      image: employeeData['image'],
+      faceId: employeeData['faceId'],
     );
   }
 }

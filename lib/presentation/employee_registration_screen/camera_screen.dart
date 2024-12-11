@@ -1,74 +1,49 @@
 import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
+
 
 import 'package:camera/camera.dart';
+import 'package:facein/application/capture_image_cubit/capture_image_cubit.dart';
+import 'package:facein/core/camera_controllers.dart';
+import 'package:facein/presentation/employee_registration_screen/employee_registration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CameraScreen extends StatefulWidget {
-  const CameraScreen({super.key, required this.controller});
-  final CameraController controller;
-
-  @override
-  State<CameraScreen> createState() => _CameraScreenState();
-}
-
-class _CameraScreenState extends State<CameraScreen> {
-  File? image;
-
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-
-    timer = Timer(const Duration(milliseconds: 5500), () async {
-      final navigator = Navigator.of(context);
-      final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-      log('hi');
-
-      final file = await widget.controller.takePicture();
-      File image = File(file.path);
-
-      scaffoldMessenger.showSnackBar(
-        customSnackbar(
-          content: const Text('Picture Captured'),
-        ),
-      );
-      navigator.pop(image);
-    });
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    log('DISPOSED');
-    await widget.controller.dispose();
-  }
+class CameraScreen extends StatelessWidget {
+  const CameraScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
+    Timer(Duration(seconds: 5), () async {
+      await context.read<CaptureImageCubit>().captureImage();
+    });
+    return BlocConsumer<CaptureImageCubit, CaptureImageState>(
+      listener: (context, state) {
+        if (state is ImageCaptured) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              customSnackBar(content: 'captured:${state.image.name}'));
+              Navigator.pop(context);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.green.shade700,
                       width: 1.5,
                     ),
                   ),
-                  child: CameraPreview(widget.controller)),
-              const SizedBox(height: 20),
-              const Center(child: Counter())
-            ],
+                  child: CameraPreview(
+                    captureController,
+                    child: Center(child: Counter()),
+                  )),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

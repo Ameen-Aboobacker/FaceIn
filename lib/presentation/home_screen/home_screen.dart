@@ -2,6 +2,7 @@ import 'package:facein/application/bottom_navigation_cubit/bottom_navigation_cub
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/employee_registration_bloc/employee_registration_bloc.dart';
 import 'widgets/custom_bottom_bar.dart';
 import '../employee_details_screen/employees_screen.dart';
 import '../employee_registration_screen/employee_registration.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends StatelessWidget {
           body: pages[state],
           backgroundColor: Colors.white,
           bottomNavigationBar: CustomBar(currentIndex: state),
+         
         );
       },
     );

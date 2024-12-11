@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB-6tZMBTFophxcf4dbrm8yt05a0S3fIXk',
-    appId: '1:762925092204:android:789cf2cd0d52c64f713749',
-    messagingSenderId: '762925092204',
-    projectId: 'attendance-master-b1b2f',
-    storageBucket: 'attendance-master-b1b2f.firebasestorage.app',
+    apiKey: 'AIzaSyA9imKAZoXT7QaJwlGCqT44PDmS7P6Jr6U',
+    appId: '1:254732391880:android:3978e83dd3c8d438485cfd',
+    messagingSenderId: '254732391880',
+    projectId: 'facein-f99bd',
+    storageBucket: 'facein-f99bd.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCsSQ56YdfCdIeh3m22HVUj0Z9tXgOABCg',
-    appId: '1:762925092204:ios:74c5ce6c778c685f713749',
-    messagingSenderId: '762925092204',
-    projectId: 'attendance-master-b1b2f',
-    storageBucket: 'attendance-master-b1b2f.firebasestorage.app',
+    apiKey: 'AIzaSyD1uhETk-FafWJvHlsWqOSA8cUR_t_4a9c',
+    appId: '1:254732391880:ios:661b621537f6be10485cfd',
+    messagingSenderId: '254732391880',
+    projectId: 'facein-f99bd',
+    storageBucket: 'facein-f99bd.firebasestorage.app',
     iosBundleId: 'com.example.facein',
   );
+
 }
