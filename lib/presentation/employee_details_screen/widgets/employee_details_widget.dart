@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/employee_model.dart';
+import '../../../domain/entities/employee_model.dart';
 import '../../attendance_report_screen/attendance_report_screen.dart';
 import 'custom_text.dart';
 
@@ -43,7 +43,7 @@ class EmployeeDetailsWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 110,
-                    backgroundImage: AssetImage(selectedEmployee!.image),
+                    backgroundImage: AssetImage(selectedEmployee!.imageUrl),
                   ),
                   const SizedBox(height: 40),
                   Column(

@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facein/application/capture_image_cubit/capture_image_cubit.dart';
 import 'package:facein/core/camera_controllers.dart';
@@ -10,9 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/employee_registration_bloc/employee_registration_bloc.dart';
 import '../../core/app_sizes.dart';
-import '../../data/employee_model.dart';
-import '../../domain/funtions.dart';
-import '../home_screen/home_screen.dart';
+import '../../domain/entities/employee_model.dart';
 import '../widgets/submit_button_widget.dart';
 import 'camera_screen.dart';
 import 'widgets/custom_text_field.dart';
@@ -45,41 +41,39 @@ class _EmployeeRegistrationState extends State<EmployeeRegistration> {
         listener: (context, state) {
           if (state is RegistrationSuccess) {
             log('ssss');
-            ScaffoldMessenger.of(context).showSnackBar(
-                customSnackBar(content: 'details stored successfully'));
-          } else if (state is RegistrationFailed) {
-            log(state.error);
-            ScaffoldMessenger.of(context)
-                .showSnackBar(customSnackBar(content: state.error));
-          } else if (state is RegistrationLoading) {
-            showModalBottomSheet(
+            showDialog(
+              barrierDismissible: false,
               context: context,
-              builder: (context) {
-                return BlocConsumer<EmployeeRegistrationBloc,
-                    EmployeeRegistrationState>(
-                  listener: (context, state) {
-                    if (state is RegistrationFailed ||
-                        state is RegistrationSuccess) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is RegistrationLoading) {
-                      return BottomSheet(
-                        onClosing: () {},
-                        builder: (context) {
-                          return Container(
-                            height: 140,
-                            color: Colors.amber,
-                            child: Center(child: CircularProgressIndicator()),
-                          );
-                        },
-                      );
-                    }
-                    return SizedBox();
-                  },
-                );
-              },
+              builder: (cntxt) => AlertDialog(
+                title: const Text('Success'),
+                content: const Text('Employee data stored successfully'),
+                actions: [
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  )
+                ],
+              ),
+            );
+          } else if (state is RegistrationFailure) {
+            log(state.error);
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (cntxt) => AlertDialog(
+                title: const Text('Failed!'),
+                content: Text('Employee data storing failed:${state.error}'),
+                actions: [
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
             );
           }
         },
@@ -134,40 +128,45 @@ class _EmployeeRegistrationState extends State<EmployeeRegistration> {
                           label: 'Contact',
                         ),
                         AppSizes.kFormHeight2,
-                        SubmitButtonWidget(
-                          onPressed: () async {
-                            final name = nameController.text.trim();
-                            final eid = idController.text.trim();
-                            final email = emailController.text.trim();
-                            final contact = phoneController.text.trim();
-                            final image =
-                                context.read<CaptureImageCubit>().image;
-                            if (email.isEmpty ||
-                                name.isEmpty ||
-                                eid.isEmpty ||
-                                contact.isEmpty ||
-                                image == null) {
-                              log(image.toString());
-                              SnackBar snackBar = customSnackBar(
-                                  content: 'All Fields required');
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } else {
-                              final employee = Employee(
-                                name: nameController.text.trim(),
-                                employeeId: idController.text.trim(),
-                                email: emailController.text.trim(),
-                                contact: phoneController.text.trim(),
-                                createdAt: Timestamp.fromDate(DateTime.now()),
-                              );
+                        state is RegistrationLoading
+                            ? const CircularProgressIndicator()
+                            : SubmitButtonWidget(
+                                onPressed: () async {
+                                  final name = nameController.text.trim();
+                                  final eid = idController.text.trim();
+                                  final email = emailController.text.trim();
+                                  final contact = phoneController.text.trim();
+                                  final image =
+                                      context.read<CaptureImageCubit>().image;
+                                  if (email.isEmpty ||
+                                      name.isEmpty ||
+                                      eid.isEmpty ||
+                                      contact.isEmpty ||
+                                      image == null) {
+                                    log(image.toString());
+                                    SnackBar snackBar = customSnackBar(
+                                        content: 'All Fields required');
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  } else {
+                                    final employee = Employee(
+                                      name: nameController.text.trim(),
+                                      employeeId: idController.text.trim(),
+                                      email: emailController.text.trim(),
+                                      contact: phoneController.text.trim(),
+                                      createdAt:
+                                          Timestamp.fromDate(DateTime.now()),
+                                    );
 
-                              context.read<EmployeeRegistrationBloc>().add(
-                                    Registration(
-                                        employee: employee, image: image),
-                                  );
-                            }
-                          },
-                        ),
+                                    context
+                                        .read<EmployeeRegistrationBloc>()
+                                        .add(
+                                          Registration(
+                                              employee: employee, image: image),
+                                        );
+                                  }
+                                },
+                              ),
                       ],
                     ),
                   ),

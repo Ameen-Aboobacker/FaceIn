@@ -13,7 +13,7 @@ class CameraScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 5), () async {
+    Timer(const Duration(seconds: 5), () async {
       await context.read<CaptureImageCubit>().captureImage();
     });
     return BlocConsumer<CaptureImageCubit, CaptureImageState>(
@@ -38,7 +38,7 @@ class CameraScreen extends StatelessWidget {
                   ),
                   child: CameraPreview(
                     captureController,
-                    child: Center(child: Counter()),
+                    child: const Center(child: Counter()),
                   )),
             ),
           ),

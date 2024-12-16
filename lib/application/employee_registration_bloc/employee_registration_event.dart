@@ -5,6 +5,6 @@ sealed class EmployeeRegistrationEvent {}
 
 final class Registration extends EmployeeRegistrationEvent {
   final Employee employee;
-  final XFile image;
+  final XFile? image;
   Registration({required this.employee, required this.image});
 }

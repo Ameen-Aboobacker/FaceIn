@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/employee_model.dart';
+import '../../../domain/entities/employee_model.dart';
 import 'custom_list_tile.dart';
 
 class EmployeeListWidget extends StatelessWidget {
@@ -41,7 +41,7 @@ class EmployeeListWidget extends StatelessWidget {
               leading: CircleAvatar(
                 radius: 24,
                 backgroundColor: primarycolor,
-                foregroundImage: AssetImage(employee.image),
+                foregroundImage: NetworkImage(employee.imageUrl),
               ),
               title: employee.name,
               titleTextStyle: TextStyle(

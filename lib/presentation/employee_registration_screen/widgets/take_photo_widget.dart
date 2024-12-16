@@ -19,7 +19,7 @@ class TakePhotoWidget extends StatelessWidget {
     return Stack(
       alignment: const Alignment(0.8, 0.9),
       children: [
-        ImageContainerWidget(),
+        const ImageContainerWidget(),
         GestureDetector(
           onTap: onTake,
           child: Container(

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:facein/core/camera_controllers.dart';
@@ -13,6 +12,11 @@ class CaptureImageCubit extends Cubit<CaptureImageState> {
   Future<void> captureImage() async {
     emit(ImageCapturing());
    image = await captureController.takePicture();
+    emit(ImageCaptured(image!));
+  }
+   Future<void> scanImage() async {
+    emit(ImageCapturing());
+   image = await scanningController.takePicture();
     emit(ImageCaptured(image!));
   }
 }

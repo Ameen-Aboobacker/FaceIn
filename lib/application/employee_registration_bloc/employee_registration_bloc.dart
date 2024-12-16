@@ -1,27 +1,29 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:facein/data/employee_model.dart';
-import 'package:facein/domain/funtions.dart';
+import 'package:facein/domain/entities/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/use_cases/register_employee.dart';
 
 part 'employee_registration_event.dart';
 part 'employee_registration_state.dart';
 
 class EmployeeRegistrationBloc
     extends Bloc<EmployeeRegistrationEvent, EmployeeRegistrationState> {
-  EmployeeRegistrationBloc() : super(RegistrationInitial()) {
+  final RegisterEmployee registerEmployee;
+
+  EmployeeRegistrationBloc(this.registerEmployee)
+      : super(RegistrationInitial()) {
     on<Registration>((event, emit) async {
+      emit(RegistrationLoading());
       try {
-        emit(RegistrationLoading());
-        await Future.delayed(Duration(seconds: 3), () {
-          log('processing');
-        });
-        // await registerEmployee(employee: event.employee, image: event.image);
+        final photo = File(event.image!.path);
+        await registerEmployee(event.employee, photo);
         emit(RegistrationSuccess());
       } catch (e) {
-        emit(RegistrationFailed(error: e.toString()));
+        emit(RegistrationFailure(error: e.toString()));
       }
     });
   }
