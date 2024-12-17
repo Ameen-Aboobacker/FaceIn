@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+
+import '../failures/failures.dart';
 import '../repositories/employee_repository.dart';
 
 class UploadPhoto {
@@ -7,7 +10,7 @@ class UploadPhoto {
 
   UploadPhoto(this.employeeRepository);
 
-  Future<String> call(File photo) async {
+  Future<Either<Failure,String>> call(File photo) async {
     return await employeeRepository.uploadPhoto(photo);
   }
 }

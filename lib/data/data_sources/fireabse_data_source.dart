@@ -2,11 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/entities/attendance_model.dart';
 import '../../domain/entities/employee_model.dart';
+import '../../domain/failures/failures.dart';
 
 class FirebaseDataSource {
   final FirebaseStorage storage;
@@ -14,17 +16,32 @@ class FirebaseDataSource {
 
   FirebaseDataSource(this.storage, this.firestore);
 
-  Future<String> uploadPhoto(File photo) async {
-    final ref = storage.ref().child('photos/${photo.hashCode}.jpg');
-    final task = await ref.putFile(photo);
-    final url = await task.ref.getDownloadURL();
-    return url;
+  Future<Either<Failure, String>> uploadPhoto(File photo) async {
+    final ref = storage.ref().child('employees/${photo.hashCode}.jpg');
+    try {
+      final task = await ref.putFile(photo);
+      final url = await task.ref.getDownloadURL();
+      return Right(url);
+    } catch (e) {
+      return Left(Failure.firestore(e.toString()));
+    }
   }
 
-  Future<void> saveEmployeeDetails(Employee employee) async {
-    await firestore.collection('employees').doc(employee.employeeId).set(
-          employee.toJson(),
-        );
+  Future<Either<Failure, Unit>> saveEmployeeDetails(Employee employee) async {
+    try {
+      await firestore.collection('employees').doc(employee.employeeId).set(
+            employee.toJson(),
+          );
+      return const Right(unit);
+    } on FirebaseException catch (e) {
+      return Left(
+        Failure.firestore(e.toString()),
+      );
+    } catch (e) {
+      return Left(
+        Failure.unexpected(e.toString()),
+      );
+    }
   }
 
   Future<void> markAttendance(String id) async {

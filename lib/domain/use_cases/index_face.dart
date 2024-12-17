@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+
+import '../failures/failures.dart';
 import '../repositories/face_rekognition_repository.dart';
 
 class IndexFace {
@@ -7,7 +10,11 @@ class IndexFace {
 
   IndexFace(this.faceRecognitionRepository);
 
-  Future<String?> call(File photo) async {
-    return await faceRecognitionRepository.indexFace(photo);
+  Future<Either<Failure,String>> call(File photo) async {
+    final res = await faceRecognitionRepository.indexFace(photo);
+   return res.fold(
+      (fail) =>  Left(fail),
+      (succes) => Right(succes),
+    );
   }
 }

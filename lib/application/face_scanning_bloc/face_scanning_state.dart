@@ -13,6 +13,6 @@ final class ScanningSuccess extends FaceScanningState {
 }
 
 final class ScanningFailed extends FaceScanningState {
-  final String message;
-  ScanningFailed(this.message);
+  final Failure failure;
+  ScanningFailed({required this.failure});
 }

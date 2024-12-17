@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+
 import '../entities/employee_model.dart';
+import '../failures/failures.dart';
 import 'index_face.dart';
 import 'save_details.dart';
 import 'upload_photo.dart';
@@ -12,15 +15,24 @@ class RegisterEmployee {
 
   RegisterEmployee(this.uploadPhoto, this.indexFace, this.saveEmployeeDetails);
 
-  Future<void> call(Employee employee, File photo) async {
-    final uploadPhotoFuture = uploadPhoto(photo);
-    final indexFaceFuture = indexFace(photo);
+  Future<Either<Failure, Unit>> call(Employee employee, File photo) async {
+   final imageUrlResult = await uploadPhoto(photo);
+    final faceIdResult = await indexFace(photo);
 
-    final imageUrl = await uploadPhotoFuture;
-    final faceId = await indexFaceFuture;
-
-    await saveEmployeeDetails(
-      employee.copyWith(imageUrl: imageUrl, faceId: faceId),
+    return imageUrlResult.fold(
+      (failure) => Left(failure),
+      (imageUrl) => faceIdResult.fold(
+        (failure) => Left(failure),
+        (faceId) async {
+          final saveResult = await saveEmployeeDetails(
+            employee.copyWith(imageUrl: imageUrl, faceId: faceId),
+          );
+          return saveResult.fold(
+            (failure) => Left(failure),
+            (successMessage) =>const Right(unit), // Return the actual success message
+          );
+        },
+      ),
     );
   }
 }

@@ -22,7 +22,20 @@ class FaceScanning extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
               verificationBar(employee: state.employee, image: image));
         } else if (state is ScanningFailed) {
-          log("failed :${state.message}");
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              final nav = Navigator.of(context);
+              Future.delayed(const Duration(seconds: 3), () {
+                nav.pop(); // Close the dialog and return a value
+              });
+              return AlertDialog(
+                title: const Text('Failed'),
+                content: Text(state.failure.message),
+              );
+            },
+          );
         }
       },
       builder: (context, state) {
