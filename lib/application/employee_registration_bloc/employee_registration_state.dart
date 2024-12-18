@@ -11,6 +11,12 @@ final class RegistrationFailure extends EmployeeRegistrationState {
   final String error;
   RegistrationFailure({required this.error});
 }
+
 final class IndexFaceSuccess extends EmployeeRegistrationState {}
+
 final class ImageUploadSuccess extends EmployeeRegistrationState {}
-final class RegistrationSuccess extends EmployeeRegistrationState {}
+
+final class RegistrationSuccess extends EmployeeRegistrationState {
+  final Employee employee;
+  RegistrationSuccess(this.employee);
+}

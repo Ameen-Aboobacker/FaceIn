@@ -41,9 +41,9 @@ class EmployeeDetailsWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                 const  CircleAvatar(
                     radius: 110,
-                    backgroundImage: AssetImage(selectedEmployee!.imageUrl),
+                   // backgroundImage: AssetImage(selectedEmployee!.imageUrl),
                   ),
                   const SizedBox(height: 40),
                   Column(
@@ -51,7 +51,7 @@ class EmployeeDetailsWidget extends StatelessWidget {
                     children: [
                       CustomText(label: selectedEmployee!.name),
                       const SizedBox(height: 13),
-                      CustomText(label: 'ID:${selectedEmployee!.employeeId}'),
+                      CustomText(label: 'ID:${selectedEmployee!.id}'),
                       const SizedBox(height: 13),
                       CustomText(label: selectedEmployee!.email),
                       const SizedBox(height: 13),

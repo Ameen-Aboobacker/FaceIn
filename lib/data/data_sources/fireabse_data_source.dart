@@ -29,14 +29,13 @@ class FirebaseDataSource {
 
   Future<Either<Failure, Unit>> saveEmployeeDetails(Employee employee) async {
     try {
-      await firestore.collection('employees').doc(employee.employeeId).set(
-            employee.toJson(),
-          );
+      await firestore
+          .collection('employees')
+          .doc(employee.id)
+          .set(employee.toJson());
       return const Right(unit);
     } on FirebaseException catch (e) {
-      return Left(
-        Failure.firestore(e.toString()),
-      );
+      return Left(Failure.firestore(e.toString()));
     } catch (e) {
       return Left(
         Failure.unexpected(e.toString()),

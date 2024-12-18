@@ -11,16 +11,16 @@ class AwsRekognitionDataSource {
   AwsRekognitionDataSource(this.rekognition);
 
   Future<Either<Failure, String>> indexFace(File photo) async {
-    Uint8List imageBytes = await photo.readAsBytes();
+   Uint8List imageBytes = await photo.readAsBytes();
     try {
-      final response = await rekognition.indexFaces(
+     final response = await rekognition.indexFaces(
         collectionId: 'employee_faces',
         image: Image(bytes: imageBytes),
       );
       final records = response.faceRecords;
       if (records != null && records.isNotEmpty) {
-        return Right(records.first.face!.faceId!);
-      } else {
+        return const Right('faceId');
+     } else {
         return const Left(Failure.rekognition("Face indexing failed."));
       }
     } on InvalidParameterException catch (e) {

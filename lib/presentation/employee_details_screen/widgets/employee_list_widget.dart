@@ -41,14 +41,14 @@ class EmployeeListWidget extends StatelessWidget {
               leading: CircleAvatar(
                 radius: 24,
                 backgroundColor: primarycolor,
-                foregroundImage: NetworkImage(employee.imageUrl),
+                foregroundImage: NetworkImage(employee.imageUrl!),
               ),
               title: employee.name,
               titleTextStyle: TextStyle(
                   color: primarycolor,
                   fontSize: 16,
                   fontWeight: FontWeight.w500),
-              subtitle: employee.employeeId,
+              subtitle: employee.id,
               subtitleTextStyle: TextStyle(color: primarycolor),
               trailing: IconButton(
                 onPressed: () {},

@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Employee {
   String id;
-  String imageUrl;
+  String? imageUrl;
   String faceId;
   final String name;
-  final String employeeId;
+  final String designation;
   final String email;
   final String contact;
   final Timestamp? createdAt;
@@ -13,9 +13,9 @@ class Employee {
   Employee({
     this.faceId = '',
     this.id = '',
-    this.imageUrl = 'assets/images/user_icon.jpg',
+    this.imageUrl,
     required this.name,
-    required this.employeeId,
+    required this.designation,
     required this.email,
     required this.contact,
     required this.createdAt,
@@ -25,7 +25,7 @@ class Employee {
   toJson() {
     return {
       'name': name,
-      'employeeId': employeeId,
+      'designation': designation,
       'email': email,
       'contact': contact,
       'id': id,
@@ -38,7 +38,7 @@ class Employee {
   // Copy constructor to create a new Employee with the option to change some fields
   Employee copyWith({
     String? id,
-    String? employeeId,
+    String? designation,
     String? name,
     String? faceId,
     String? imageUrl,
@@ -48,7 +48,7 @@ class Employee {
   }) {
     return Employee(
       id: id ?? this.id,
-      employeeId: employeeId ?? this.employeeId,
+      designation: designation ?? this.designation,
       name: name ?? this.name,
       faceId: faceId ?? this.faceId,
       imageUrl: imageUrl ?? this.imageUrl,
@@ -65,12 +65,19 @@ class Employee {
     return Employee(
       name: employeeData['name'],
       id: employeeData['id'],
-      employeeId: employeeData['employeeId'],
+      designation: employeeData['designation'],
       email: employeeData['email'],
       contact: employeeData['contact'],
       createdAt: employeeData['createdAt'],
-      imageUrl: employeeData['imageUrl'],
+      imageUrl: employeeData['imageUrl'] ?? 'assets/images/user_icon.jpg',
       faceId: employeeData['faceId'],
     );
+  }
+  bool isEmpty() {
+    return name.isEmpty ||
+        id.isEmpty ||
+        email.isEmpty ||
+        contact.isEmpty ||
+        imageUrl == null;
   }
 }

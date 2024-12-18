@@ -16,29 +16,31 @@ class TakePhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: const Alignment(0.8, 0.9),
-      children: [
-        const ImageContainerWidget(),
-        GestureDetector(
-          onTap: onTake,
-          child: Container(
-            height: 30,
-            width: 30,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primaryColor,
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.photo_camera_rounded,
-                color: Colors.white,
-                size: 17,
+    return Center(
+      child: Stack(
+        alignment: const Alignment(0.8, 0.9),
+        children: [
+          const ImageContainerWidget(),
+          GestureDetector(
+            onTap: onTake,
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primaryColor,
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.photo_camera_rounded,
+                  color: Colors.white,
+                  size: 17,
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -66,6 +68,7 @@ class ImageContainerWidget extends StatelessWidget {
                   ),
                 )
               : BoxDecoration(
+                  color: const Color(0xFFD9D9E7),
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColors.primaryColor),
                 ),

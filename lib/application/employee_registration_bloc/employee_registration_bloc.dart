@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -21,7 +22,8 @@ class EmployeeRegistrationBloc
       try {
         final photo = File(event.image!.path);
         await registerEmployee(event.employee, photo);
-        emit(RegistrationSuccess());
+        //log(event.employee.toJson().toString());
+        emit(RegistrationSuccess(event.employee));
       } catch (e) {
         emit(RegistrationFailure(error: e.toString()));
       }

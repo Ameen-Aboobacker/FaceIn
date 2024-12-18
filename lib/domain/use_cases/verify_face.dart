@@ -25,7 +25,7 @@ class VerifyFace {
     }, (success) async {
       final Employee employee =
           await employeeRepository.fetchEmployeeDetails(success);
-      await attendanceRepository.markAttendance(employee.employeeId);
+      await attendanceRepository.markAttendance(employee.id);
 
       return Right(employee);
     });

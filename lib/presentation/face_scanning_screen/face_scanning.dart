@@ -17,7 +17,7 @@ class FaceScanning extends StatelessWidget {
     return BlocConsumer<FaceScanningBloc, FaceScanningState>(
       listener: (context, state) {
         if (state is ScanningSuccess) {
-          NetworkImage image = NetworkImage(state.employee.imageUrl);
+          NetworkImage image = NetworkImage(state.employee.imageUrl!);
           log(state.employee.toJson().toString());
           ScaffoldMessenger.of(context).showSnackBar(
               verificationBar(employee: state.employee, image: image));
@@ -91,7 +91,7 @@ SnackBar verificationBar(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Icon(Icons.admin_panel_settings_outlined),
-                  Text(employee.employeeId,
+                  Text(employee.id,
                       style: const TextStyle(color: color1)),
                 ],
               ),
