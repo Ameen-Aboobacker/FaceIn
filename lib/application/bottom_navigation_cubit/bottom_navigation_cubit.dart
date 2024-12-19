@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavigationCubit extends Cubit<int> {
-  BottomNavigationCubit() : super(1);
+  BottomNavigationCubit() : super(0);
   void onChangeIndex(int value) {
     emit(value);
   }

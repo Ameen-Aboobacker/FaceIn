@@ -5,7 +5,7 @@ class Employee {
   String? imageUrl;
   String faceId;
   final String name;
-  final String designation;
+  final String? designation;
   final String email;
   final String contact;
   final Timestamp? createdAt;

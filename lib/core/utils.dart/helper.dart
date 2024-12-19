@@ -35,8 +35,8 @@ class Helper {
     required XFile? image,
   }) {
     log('sss');
-    if ([name, des, email, contact].any((field) => field.isEmpty) ||
-        image == null) {
+    if ([name, des, email, contact].any((field) => field.isEmpty) /*||
+       image == null*/) {
       final snackBar = customSnackBar(content: 'All Fields required');
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
@@ -56,4 +56,5 @@ class Helper {
           );
     }
   }
+  
 }

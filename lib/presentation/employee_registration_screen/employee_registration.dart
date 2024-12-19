@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:facein/core/camera_controllers.dart';
 import 'package:facein/core/colors.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +12,6 @@ class EmployeeRegistration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController idController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController phoneController = TextEditingController();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -28,11 +25,15 @@ class EmployeeRegistration extends StatelessWidget {
         title: const Text('Employee Details'),
       ),
       body: EmployeeRegistrationBlocConsumer(
-        formKey: formKey,
+        onTap: () {
+          log('ssss');
+          FocusScope.of(context).unfocus();
+        },
+      /*  formKey: formKey,
         nameController: nameController,
         idController: idController,
         emailController: emailController,
-        phoneController: phoneController,
+        phoneController: phoneController,*/
         onCapture: () async {
           final scaffoldMessenger = ScaffoldMessenger.of(context);
           final nav = Navigator.of(context);
@@ -49,6 +50,7 @@ class EmployeeRegistration extends StatelessWidget {
     );
   }
 }
+
 SnackBar customSnackBar({required content}) {
   return SnackBar(
     behavior: SnackBarBehavior.floating,

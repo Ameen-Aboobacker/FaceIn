@@ -5,7 +5,7 @@ import 'widgets/custom_bottom_bar.dart';
 import '../employee_registration_screen/employee_registration.dart';
 import '../face_scanning_screen/face_scanning.dart';
 
-ValueNotifier<int> indexNotifier = ValueNotifier(1);
+ValueNotifier<int> indexNotifier = ValueNotifier(0);
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

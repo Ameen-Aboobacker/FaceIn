@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facein/data/data_sources/fireabse_data_source.dart';
+import 'package:facein/data/data_sources/template_data_source.dart';
 import 'package:facein/data/repositories/employee_repository_impl.dart';
 import 'package:facein/domain/use_cases/register_employee.dart';
 import 'package:facein/domain/use_cases/save_details.dart';
@@ -21,7 +22,7 @@ FirebaseStorage storage = FirebaseStorage.instance;
 FirebaseDataSource firebaseDataSource = FirebaseDataSource(storage, firestore);
 AwsRekognitionDataSource awsRekognitionDataSource =
     AwsRekognitionDataSource(rekognition);
-
+TemplateDataSource templateDataSource = TemplateDataSource();
 //Repositories
 EmployeeRepository employeeRepository =
     EmployeeRepositoryImpl(firebaseDataSource);

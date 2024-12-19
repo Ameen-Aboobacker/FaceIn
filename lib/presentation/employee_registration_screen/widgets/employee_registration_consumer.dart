@@ -13,28 +13,30 @@ import '../../widgets/submit_button_widget.dart';
 import 'take_photo_widget.dart';
 
 class EmployeeRegistrationBlocConsumer extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final TextEditingController nameController;
-  final TextEditingController idController;
-  final TextEditingController emailController;
-  final TextEditingController phoneController;
+  final GlobalKey<FormState> formKey = GlobalKey();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
   final VoidCallback onCapture;
-  const EmployeeRegistrationBlocConsumer({
+  final VoidCallback onTap;
+  EmployeeRegistrationBlocConsumer({
     super.key,
-    required this.formKey,
-    required this.nameController,
-    required this.idController,
-    required this.emailController,
-    required this.phoneController,
     required this.onCapture,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<EmployeeRegistrationBloc, EmployeeRegistrationState>(
-      listener: (context, state) {
+      listener: (contxt, state) {
+        if (state is RegistrationLoading) {
+          clearTextFields();
+        }
         if (state is RegistrationSuccess) {
           log(state.employee.toJson().toString());
+
           _showDialog(
             context,
             title: 'Success',
@@ -48,10 +50,11 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
           );
         }
       },
-      builder: (context, state) {
+      builder: (contxt, state) {
         return GestureDetector(
           onTap: () {
-            log('ssss');
+            log('ss]b');
+
             FocusScope.of(context).unfocus();
           },
           child: Padding(
@@ -59,7 +62,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
             child: Form(
               key: formKey,
               child: ListView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   TakePhotoWidget(onTake: onCapture),
                   const SizedBox(height: 20),
@@ -109,7 +112,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
         context: context,
         builder: (context) {
           final nav = Navigator.of(context);
-          Future.delayed(Duration(seconds: 1), () {
+          Future.delayed(const Duration(seconds: 1), () {
             log('pop1');
             nav.pop();
           });
@@ -124,5 +127,12 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
             ],
           );
         });
+  }
+
+  void clearTextFields() {
+    nameController.clear();
+    idController.clear();
+    emailController.clear();
+    phoneController.clear();
   }
 }

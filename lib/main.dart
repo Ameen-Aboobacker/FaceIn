@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           create: (context) => BottomNavigationCubit(),
         ),
         BlocProvider(
-          create: (context) => EmployeeRegistrationBloc(registerEmployee),
+          create: (context) => EmployeeRegistrationBloc(registerEmployee,templateDataSource),
         ),
         BlocProvider(
           create: (context) => FaceScanningBloc(verifyFace),

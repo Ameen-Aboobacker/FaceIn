@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:facein/presentation/home_screen/home_screen.dart';
+import 'package:facein/presentation/onboarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedScaffold extends StatefulWidget {
@@ -31,7 +31,7 @@ class _AnimatedScaffoldState extends State<AnimatedScaffold>
 
     Timer(const Duration(milliseconds: 5200), () {
       Navigator.of(context).push(
-        CustomPageRoute(page: const HomeScreen()),
+        CustomPageRoute(page: const OnBoardingScreen()),
       );
     });
   }
@@ -72,21 +72,23 @@ class CustomPageRoute extends PageRouteBuilder {
 
   CustomPageRoute({required this.page})
       : super(
-        transitionDuration: const Duration(milliseconds: 2000),
-          pageBuilder: (
-            context,
-            animation,
-            secondaryAnimation,
-          ) =>
-              page,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (
             context,
             animation,
             secondaryAnimation,
             child,
           ) {
-            return FadeTransition(
-              opacity: animation,
+            const Offset beginOffset = Offset(1.0, 0.0); // Custom function
+
+            const Offset endOffset = Offset.zero; // Slide in from the right
+
+            // Create a Tween<Offset> to animate the position smoothly
+            final tween = Tween<Offset>(begin: beginOffset, end: endOffset)
+                .animate(animation);
+            return SlideTransition(
+              position: tween,
               child: child,
             );
           },
