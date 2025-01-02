@@ -2,40 +2,63 @@ import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:facein/application/face_scanning_bloc/face_scanning_bloc.dart';
+import 'package:facein/domain/entities/verify_model.dart';
+import 'package:facein/domain/failures/failures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/camera_controllers.dart';
-import '../../domain/entities/employee_model.dart';
 
 class FaceScanning extends StatelessWidget {
   const FaceScanning({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<FaceScanningBloc>().add(ScanningFace());
+    context.read<FaceScanningBloc>().add(SampleScan());
     return BlocConsumer<FaceScanningBloc, FaceScanningState>(
       listener: (context, state) {
         if (state is ScanningSuccess) {
-          NetworkImage image = NetworkImage(state.employee.imageUrl!);
-          log(state.employee.toJson().toString());
+          log(state.verifyModel.toString());
           ScaffoldMessenger.of(context).showSnackBar(
-              verificationBar(employee: state.employee, image: image));
+              verificationBar(verificationData: state.verifyModel));
         } else if (state is ScanningFailed) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              final nav = Navigator.of(context);
-              Future.delayed(const Duration(seconds: 3), () {
-                nav.pop(); // Close the dialog and return a value
-              });
-              return AlertDialog(
-                title: const Text('Failed'),
-                content: Text(state.failure.message),
-              );
-            },
-          );
+          if (state.failure is RekognitionFailure) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                final nav = Navigator.of(context);
+                Future.delayed(const Duration(seconds: 3), () {
+                  nav.pop(); // Close the dialog and return a value
+                });
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  icon: const Icon(Icons.close),
+                  shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.red, width: 2),
+                      borderRadius: BorderRadius.circular(8)),
+                  title: const Text('Rekognition Failure'),
+                  titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
+                  content: Text(state.failure.message),
+                );
+              },
+            );
+          } else {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                final nav = Navigator.of(context);
+                Future.delayed(const Duration(seconds: 3), () {
+                  nav.pop(); // Close the dialog and return a value
+                });
+                return AlertDialog(
+                  title: const Text('Failed'),
+                  content: Text(state.failure.message),
+                );
+              },
+            );
+          }
         }
       },
       builder: (context, state) {
@@ -49,8 +72,9 @@ class FaceScanning extends StatelessWidget {
   }
 }
 
-SnackBar verificationBar(
-    {required Employee employee, required NetworkImage image}) {
+SnackBar verificationBar({
+  required VerifyModel verificationData,
+}) {
   const Color color1 = Colors.black;
   const Color color2 = Color(0xFF206323);
   return SnackBar(
@@ -67,7 +91,7 @@ SnackBar verificationBar(
         children: [
           CircleAvatar(
             radius: 60,
-            backgroundImage: image,
+            backgroundImage: verificationData.employee.imageUrl,
           ),
           const SizedBox(width: 30),
           Column(
@@ -77,21 +101,22 @@ SnackBar verificationBar(
                 'Verification is\nSuccessfull',
                 style: TextStyle(color: color2, fontSize: 20),
               ),
-              const Text('December 12, 2024 at 4:53 PM ',
-                  style: TextStyle(color: color1, fontSize: 13)),
+              Text(verificationData.date,
+                  style: const TextStyle(color: color1, fontSize: 13)),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Icon(Icons.person),
-                  Text(employee.name, style: const TextStyle(color: color1)),
+                  Text(verificationData.employee.name,
+                      style: const TextStyle(color: color1)),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Icon(Icons.admin_panel_settings_outlined),
-                  Text(employee.id,
+                  Text(verificationData.employee.id,
                       style: const TextStyle(color: color1)),
                 ],
               ),

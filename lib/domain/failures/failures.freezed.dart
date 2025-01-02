@@ -21,8 +21,9 @@ mixin _$Failure {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) rekognition,
     required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
     required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
     required TResult Function(String message) unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,8 +31,9 @@ mixin _$Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? rekognition,
     TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
     TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
     TResult? Function(String message)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,8 +41,9 @@ mixin _$Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? rekognition,
     TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
     TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
     TResult Function(String message)? unexpected,
     required TResult orElse(),
   }) =>
@@ -49,8 +52,9 @@ mixin _$Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(RekognitionFailure value) rekognition,
     required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
     required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
     required TResult Function(UnexpectedFailure value) unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,8 +62,9 @@ mixin _$Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RekognitionFailure value)? rekognition,
     TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
     TResult? Function(UnexpectedFailure value)? unexpected,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,8 +72,9 @@ mixin _$Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RekognitionFailure value)? rekognition,
     TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
     TResult Function(UnexpectedFailure value)? unexpected,
     required TResult orElse(),
   }) =>
@@ -187,8 +193,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) rekognition,
     required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
     required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
     required TResult Function(String message) unexpected,
   }) {
     return rekognition(message);
@@ -199,8 +206,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? rekognition,
     TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
     TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
     TResult? Function(String message)? unexpected,
   }) {
     return rekognition?.call(message);
@@ -211,8 +219,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? rekognition,
     TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
     TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
     TResult Function(String message)? unexpected,
     required TResult orElse(),
   }) {
@@ -227,8 +236,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(RekognitionFailure value) rekognition,
     required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
     required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
     required TResult Function(UnexpectedFailure value) unexpected,
   }) {
     return rekognition(this);
@@ -239,8 +249,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RekognitionFailure value)? rekognition,
     TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
     TResult? Function(UnexpectedFailure value)? unexpected,
   }) {
     return rekognition?.call(this);
@@ -251,8 +262,9 @@ class _$RekognitionFailureImpl implements RekognitionFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RekognitionFailure value)? rekognition,
     TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
     TResult Function(UnexpectedFailure value)? unexpected,
     required TResult orElse(),
   }) {
@@ -351,8 +363,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) rekognition,
     required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
     required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
     required TResult Function(String message) unexpected,
   }) {
     return firestore(message);
@@ -363,8 +376,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? rekognition,
     TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
     TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
     TResult? Function(String message)? unexpected,
   }) {
     return firestore?.call(message);
@@ -375,8 +389,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? rekognition,
     TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
     TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
     TResult Function(String message)? unexpected,
     required TResult orElse(),
   }) {
@@ -391,8 +406,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(RekognitionFailure value) rekognition,
     required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
     required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
     required TResult Function(UnexpectedFailure value) unexpected,
   }) {
     return firestore(this);
@@ -403,8 +419,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RekognitionFailure value)? rekognition,
     TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
     TResult? Function(UnexpectedFailure value)? unexpected,
   }) {
     return firestore?.call(this);
@@ -415,8 +432,9 @@ class _$FirestoreFailureImpl implements FirestoreFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RekognitionFailure value)? rekognition,
     TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
     TResult Function(UnexpectedFailure value)? unexpected,
     required TResult orElse(),
   }) {
@@ -438,170 +456,6 @@ abstract class FirestoreFailure implements Failure {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FirestoreFailureImplCopyWith<_$FirestoreFailureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$FirebaseAuthFailureImplCopyWith<$Res>
-    implements $FailureCopyWith<$Res> {
-  factory _$$FirebaseAuthFailureImplCopyWith(_$FirebaseAuthFailureImpl value,
-          $Res Function(_$FirebaseAuthFailureImpl) then) =
-      __$$FirebaseAuthFailureImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$FirebaseAuthFailureImplCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$FirebaseAuthFailureImpl>
-    implements _$$FirebaseAuthFailureImplCopyWith<$Res> {
-  __$$FirebaseAuthFailureImplCopyWithImpl(_$FirebaseAuthFailureImpl _value,
-      $Res Function(_$FirebaseAuthFailureImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Failure
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$FirebaseAuthFailureImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$FirebaseAuthFailureImpl implements FirebaseAuthFailure {
-  const _$FirebaseAuthFailureImpl(this.message);
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'Failure.firebaseAuth(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FirebaseAuthFailureImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  /// Create a copy of Failure
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$FirebaseAuthFailureImplCopyWith<_$FirebaseAuthFailureImpl> get copyWith =>
-      __$$FirebaseAuthFailureImplCopyWithImpl<_$FirebaseAuthFailureImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) rekognition,
-    required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
-    required TResult Function(String message) network,
-    required TResult Function(String message) unexpected,
-  }) {
-    return firebaseAuth(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? rekognition,
-    TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
-    TResult? Function(String message)? network,
-    TResult? Function(String message)? unexpected,
-  }) {
-    return firebaseAuth?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? rekognition,
-    TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
-    TResult Function(String message)? network,
-    TResult Function(String message)? unexpected,
-    required TResult orElse(),
-  }) {
-    if (firebaseAuth != null) {
-      return firebaseAuth(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RekognitionFailure value) rekognition,
-    required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
-    required TResult Function(NetworkFailure value) network,
-    required TResult Function(UnexpectedFailure value) unexpected,
-  }) {
-    return firebaseAuth(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RekognitionFailure value)? rekognition,
-    TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
-    TResult? Function(NetworkFailure value)? network,
-    TResult? Function(UnexpectedFailure value)? unexpected,
-  }) {
-    return firebaseAuth?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RekognitionFailure value)? rekognition,
-    TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
-    TResult Function(NetworkFailure value)? network,
-    TResult Function(UnexpectedFailure value)? unexpected,
-    required TResult orElse(),
-  }) {
-    if (firebaseAuth != null) {
-      return firebaseAuth(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FirebaseAuthFailure implements Failure {
-  const factory FirebaseAuthFailure(final String message) =
-      _$FirebaseAuthFailureImpl;
-
-  @override
-  String get message;
-
-  /// Create a copy of Failure
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FirebaseAuthFailureImplCopyWith<_$FirebaseAuthFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -678,8 +532,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) rekognition,
     required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
     required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
     required TResult Function(String message) unexpected,
   }) {
     return network(message);
@@ -690,8 +545,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? rekognition,
     TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
     TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
     TResult? Function(String message)? unexpected,
   }) {
     return network?.call(message);
@@ -702,8 +558,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? rekognition,
     TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
     TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
     TResult Function(String message)? unexpected,
     required TResult orElse(),
   }) {
@@ -718,8 +575,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(RekognitionFailure value) rekognition,
     required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
     required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
     required TResult Function(UnexpectedFailure value) unexpected,
   }) {
     return network(this);
@@ -730,8 +588,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RekognitionFailure value)? rekognition,
     TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
     TResult? Function(UnexpectedFailure value)? unexpected,
   }) {
     return network?.call(this);
@@ -742,8 +601,9 @@ class _$NetworkFailureImpl implements NetworkFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RekognitionFailure value)? rekognition,
     TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
     TResult Function(UnexpectedFailure value)? unexpected,
     required TResult orElse(),
   }) {
@@ -765,6 +625,346 @@ abstract class NetworkFailure implements Failure {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NetworkFailureImplCopyWith<_$NetworkFailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FirebaseAuthFailureImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$FirebaseAuthFailureImplCopyWith(_$FirebaseAuthFailureImpl value,
+          $Res Function(_$FirebaseAuthFailureImpl) then) =
+      __$$FirebaseAuthFailureImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$FirebaseAuthFailureImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$FirebaseAuthFailureImpl>
+    implements _$$FirebaseAuthFailureImplCopyWith<$Res> {
+  __$$FirebaseAuthFailureImplCopyWithImpl(_$FirebaseAuthFailureImpl _value,
+      $Res Function(_$FirebaseAuthFailureImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$FirebaseAuthFailureImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FirebaseAuthFailureImpl implements FirebaseAuthFailure {
+  const _$FirebaseAuthFailureImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'Failure.firebaseAuth(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FirebaseAuthFailureImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FirebaseAuthFailureImplCopyWith<_$FirebaseAuthFailureImpl> get copyWith =>
+      __$$FirebaseAuthFailureImplCopyWithImpl<_$FirebaseAuthFailureImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) rekognition,
+    required TResult Function(String message) firestore,
+    required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
+    required TResult Function(String message) unexpected,
+  }) {
+    return firebaseAuth(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? rekognition,
+    TResult? Function(String message)? firestore,
+    TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
+    TResult? Function(String message)? unexpected,
+  }) {
+    return firebaseAuth?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? rekognition,
+    TResult Function(String message)? firestore,
+    TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
+    TResult Function(String message)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (firebaseAuth != null) {
+      return firebaseAuth(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RekognitionFailure value) rekognition,
+    required TResult Function(FirestoreFailure value) firestore,
+    required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
+    required TResult Function(UnexpectedFailure value) unexpected,
+  }) {
+    return firebaseAuth(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RekognitionFailure value)? rekognition,
+    TResult? Function(FirestoreFailure value)? firestore,
+    TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
+    TResult? Function(UnexpectedFailure value)? unexpected,
+  }) {
+    return firebaseAuth?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RekognitionFailure value)? rekognition,
+    TResult Function(FirestoreFailure value)? firestore,
+    TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
+    TResult Function(UnexpectedFailure value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (firebaseAuth != null) {
+      return firebaseAuth(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FirebaseAuthFailure implements Failure {
+  const factory FirebaseAuthFailure(final String message) =
+      _$FirebaseAuthFailureImpl;
+
+  @override
+  String get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FirebaseAuthFailureImplCopyWith<_$FirebaseAuthFailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$VerificationFailureImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
+  factory _$$VerificationFailureImplCopyWith(_$VerificationFailureImpl value,
+          $Res Function(_$VerificationFailureImpl) then) =
+      __$$VerificationFailureImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$VerificationFailureImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$VerificationFailureImpl>
+    implements _$$VerificationFailureImplCopyWith<$Res> {
+  __$$VerificationFailureImplCopyWithImpl(_$VerificationFailureImpl _value,
+      $Res Function(_$VerificationFailureImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$VerificationFailureImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$VerificationFailureImpl implements VerificationFailure {
+  const _$VerificationFailureImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'Failure.verification(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VerificationFailureImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VerificationFailureImplCopyWith<_$VerificationFailureImpl> get copyWith =>
+      __$$VerificationFailureImplCopyWithImpl<_$VerificationFailureImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) rekognition,
+    required TResult Function(String message) firestore,
+    required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
+    required TResult Function(String message) unexpected,
+  }) {
+    return verification(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? rekognition,
+    TResult? Function(String message)? firestore,
+    TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
+    TResult? Function(String message)? unexpected,
+  }) {
+    return verification?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? rekognition,
+    TResult Function(String message)? firestore,
+    TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
+    TResult Function(String message)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (verification != null) {
+      return verification(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RekognitionFailure value) rekognition,
+    required TResult Function(FirestoreFailure value) firestore,
+    required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
+    required TResult Function(UnexpectedFailure value) unexpected,
+  }) {
+    return verification(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RekognitionFailure value)? rekognition,
+    TResult? Function(FirestoreFailure value)? firestore,
+    TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
+    TResult? Function(UnexpectedFailure value)? unexpected,
+  }) {
+    return verification?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RekognitionFailure value)? rekognition,
+    TResult Function(FirestoreFailure value)? firestore,
+    TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
+    TResult Function(UnexpectedFailure value)? unexpected,
+    required TResult orElse(),
+  }) {
+    if (verification != null) {
+      return verification(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class VerificationFailure implements Failure {
+  const factory VerificationFailure(final String message) =
+      _$VerificationFailureImpl;
+
+  @override
+  String get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VerificationFailureImplCopyWith<_$VerificationFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -841,8 +1041,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult when<TResult extends Object?>({
     required TResult Function(String message) rekognition,
     required TResult Function(String message) firestore,
-    required TResult Function(String message) firebaseAuth,
     required TResult Function(String message) network,
+    required TResult Function(String message) firebaseAuth,
+    required TResult Function(String message) verification,
     required TResult Function(String message) unexpected,
   }) {
     return unexpected(message);
@@ -853,8 +1054,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? rekognition,
     TResult? Function(String message)? firestore,
-    TResult? Function(String message)? firebaseAuth,
     TResult? Function(String message)? network,
+    TResult? Function(String message)? firebaseAuth,
+    TResult? Function(String message)? verification,
     TResult? Function(String message)? unexpected,
   }) {
     return unexpected?.call(message);
@@ -865,8 +1067,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? rekognition,
     TResult Function(String message)? firestore,
-    TResult Function(String message)? firebaseAuth,
     TResult Function(String message)? network,
+    TResult Function(String message)? firebaseAuth,
+    TResult Function(String message)? verification,
     TResult Function(String message)? unexpected,
     required TResult orElse(),
   }) {
@@ -881,8 +1084,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(RekognitionFailure value) rekognition,
     required TResult Function(FirestoreFailure value) firestore,
-    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
     required TResult Function(NetworkFailure value) network,
+    required TResult Function(FirebaseAuthFailure value) firebaseAuth,
+    required TResult Function(VerificationFailure value) verification,
     required TResult Function(UnexpectedFailure value) unexpected,
   }) {
     return unexpected(this);
@@ -893,8 +1097,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(RekognitionFailure value)? rekognition,
     TResult? Function(FirestoreFailure value)? firestore,
-    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult? Function(NetworkFailure value)? network,
+    TResult? Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult? Function(VerificationFailure value)? verification,
     TResult? Function(UnexpectedFailure value)? unexpected,
   }) {
     return unexpected?.call(this);
@@ -905,8 +1110,9 @@ class _$UnexpectedFailureImpl implements UnexpectedFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(RekognitionFailure value)? rekognition,
     TResult Function(FirestoreFailure value)? firestore,
-    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
     TResult Function(NetworkFailure value)? network,
+    TResult Function(FirebaseAuthFailure value)? firebaseAuth,
+    TResult Function(VerificationFailure value)? verification,
     TResult Function(UnexpectedFailure value)? unexpected,
     required TResult orElse(),
   }) {

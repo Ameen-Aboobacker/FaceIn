@@ -2,7 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:facein/data/data_sources/fireabse_data_source.dart';
 import 'package:facein/data/data_sources/template_data_source.dart';
 import 'package:facein/data/repositories/employee_repository_impl.dart';
-import 'package:facein/domain/use_cases/register_employee.dart';
+import 'package:facein/domain/use_cases/orchestrator_classes/attendance_usecase.dart';
+import 'package:facein/domain/use_cases/fetch_all_employees.dart';
+import 'package:facein/domain/use_cases/fetch_attendance_records.dart';
+import 'package:facein/domain/use_cases/fetch_employee.dart';
+import 'package:facein/domain/use_cases/mark_attendance.dart';
+import 'package:facein/domain/use_cases/orchestrator_classes/register_employee.dart';
 import 'package:facein/domain/use_cases/save_details.dart';
 import 'package:facein/domain/use_cases/verify_face.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -33,13 +38,21 @@ final attendanceRepository = AttendanceRepositoryImpl(firebaseDataSource);
 final uploadPhoto = UploadPhoto(employeeRepository);
 final indexFace = IndexFace(faceRekognitionRepository);
 final saveEmployeeDetails = SaveEmployeeDetails(employeeRepository);
+final markAttendance = MarkAttendance(attendanceRepository);
+final fetchSingleEmployee = FetchSingleEmployee(employeeRepository);
+final verifyFace = VerifyFace(faceRekognitionRepository);
+final fetchAttendance = FetchAttendanceUsecase(attendanceRepository);
+final fetchAllEmployee = FetchAllEmployees(employeeRepository);
+
+//Orchestrator_classes
+
 final registerEmployee = RegisterEmployee(
   uploadPhoto,
   indexFace,
   saveEmployeeDetails,
 );
-final verifyFace = VerifyFace(
-  employeeRepository,
-  faceRekognitionRepository,
-  attendanceRepository,
+final attendanceUsecase = AttendanceUsecase(
+  fetchSingleEmployee,
+  markAttendance,
+  verifyFace,
 );

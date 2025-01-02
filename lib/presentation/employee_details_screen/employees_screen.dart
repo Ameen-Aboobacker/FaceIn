@@ -5,7 +5,7 @@ import 'widgets/employee_details_widget.dart';
 import 'widgets/employee_list_widget.dart';
 
 class EmployeesScreen extends StatefulWidget {
-const EmployeesScreen({ super.key });
+  const EmployeesScreen({super.key});
 
   @override
   State<EmployeesScreen> createState() => _EmployeesScreenState();
@@ -23,16 +23,19 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        foregroundColor: primarycolor,
+        foregroundColor: const Color.fromARGB(255, 11, 89, 224),
         shadowColor: Colors.transparent,
         centerTitle: true,
-        title: const Text('Employee Details'),
+        title: const Text(
+          'Employee Details',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
       backgroundColor: secondary,
       body: SafeArea(
         child: isClicked
             ? EmployeeDetailsWidget(
-                selectedEmployee: selectedEmployee,
+                selectedEmployee: selectedEmployee!,
                 onPressed: () {
                   setState(() {
                     selectedEmployee = null;

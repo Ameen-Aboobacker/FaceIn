@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:facein/application/bloc/employee_fetch_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/employee_model.dart';
 import 'custom_list_tile.dart';
@@ -16,71 +17,42 @@ class EmployeeListWidget extends StatelessWidget {
 
   final Color secondary;
   final Color primarycolor;
+
   final Function(Employee employee) onTap;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getEmployee(),
-      builder: (context, snapshot) {
-        if (snapshot.data == null) {
+    return BlocConsumer<EmployeeFetchBloc, EmployeeFetchState>(
+      builder: (context, state) {
+        if (state is FetchLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }
-        log(snapshot.data!.length.toString());
-        return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
-          itemBuilder: (context, index) {
-            final Employee employee = snapshot.data![index];
-            return CustomListTile(
-              onTap: () {
-                onTap(employee);
-              },
-              tileColor: secondary,
-              leading: CircleAvatar(
-                radius: 24,
-                backgroundColor: primarycolor,
-                foregroundImage: NetworkImage(employee.imageUrl!),
-              ),
-              title: employee.name,
-              titleTextStyle: TextStyle(
-                  color: primarycolor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500),
-              subtitle: employee.id,
-              subtitleTextStyle: TextStyle(color: primarycolor),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.settings),
-              ),
+        } else if (state is FetchSuccess) {
+          if (state.employeeList.isEmpty) {
+            return const Center(
+              child: Text('No Employess Registered'),
             );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 15),
-          itemCount: snapshot.data!.length,
-        );
+          }
+          log(state.employeeList.length.toString());
+          final employeesData = state.employeeList;
+          return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            itemBuilder: (context, index) {
+              final Employee employeeInfo = employeesData[index];
+
+              return CustomListTile(
+                index: index,
+                info: employeeInfo,
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 15),
+            itemCount: employeesData.length,
+          );
+        }
+        return const SizedBox(child: Text('not loading not success'));
       },
+      listener: (context, state) {},
     );
   }
-}
-
-Future<List<Employee>> getEmployee() async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
-      .collection('employees')
-      .orderBy('createdAt', descending: true)
-      .get();
-  log(querySnapshot.docs.length.toString());
-  List<Employee> employeesData = [];
-  for (DocumentSnapshot<Map<String, dynamic>> doc in querySnapshot.docs) {
-    employeesData.add(Employee.fromSnapshot(doc));
-  }
-  return employeesData;
-}
-
-class Routes {
-  static const String dashboard = '/dashboard';
-  static const String addEmployee = '/addEmployee';
-  static const String employeesInfo = '/employeesInfo';
-  static const String employeeDetails = '/employeeDetails';
 }

@@ -11,7 +11,7 @@ class EmployeeDetailsWidget extends StatelessWidget {
     required this.onPressed,
   });
 
-  final Employee? selectedEmployee;
+  final Employee selectedEmployee;
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
@@ -41,21 +41,23 @@ class EmployeeDetailsWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 const  CircleAvatar(
+                   CircleAvatar(
                     radius: 110,
-                   // backgroundImage: AssetImage(selectedEmployee!.imageUrl),
+                    backgroundImage: selectedEmployee.imageUrl,
                   ),
                   const SizedBox(height: 40),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomText(label: selectedEmployee!.name),
+                      CustomText(label: selectedEmployee.name),
                       const SizedBox(height: 13),
-                      CustomText(label: 'ID:${selectedEmployee!.id}'),
+                      CustomText(label: 'ID:${selectedEmployee.id}'),
                       const SizedBox(height: 13),
-                      CustomText(label: selectedEmployee!.email),
+                      CustomText(label: '${selectedEmployee.designation}'),
                       const SizedBox(height: 13),
-                      CustomText(label: selectedEmployee!.contact),
+                      CustomText(label: selectedEmployee.email),
+                      const SizedBox(height: 13),
+                      CustomText(label: selectedEmployee.contact),
                     ],
                   )
                 ],
@@ -83,9 +85,11 @@ class EmployeeDetailsWidget extends StatelessWidget {
                 color: Colors.green.shade800,
               ),
               onPressed: () {
-               Navigator.of(context).push(
+                Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const AttendanceReportScreen(),
+                    builder: (context) => AttendanceReportScreen(
+                      employee: selectedEmployee,
+                    ),
                   ),
                 );
               },

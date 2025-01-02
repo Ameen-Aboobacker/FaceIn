@@ -1,7 +1,11 @@
+import 'package:dartz/dartz.dart';
+
 import '../entities/attendance_model.dart';
+import '../failures/failures.dart';
 
 abstract interface class AttendanceRepository {
-  Future<void> markAttendance(String employeeId);
+   Future<Either<Failure,DateTime?>>  markAttendance(String employeeId);
 
-  Future<List<Attendance>> fetchAttendance(String employeeId);
+  Future<Either<Failure, List<Attendance>>> fetchAttendance(
+      String employeeId, String date);
 }

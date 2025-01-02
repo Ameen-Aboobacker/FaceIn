@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Employee {
   String id;
-  String? imageUrl;
+  dynamic imageUrl;
   String faceId;
   final String name;
   final String? designation;
@@ -41,7 +42,7 @@ class Employee {
     String? designation,
     String? name,
     String? faceId,
-    String? imageUrl,
+    dynamic imagep,
     Timestamp? createdAt,
     String? email,
     String? contact,
@@ -51,7 +52,7 @@ class Employee {
       designation: designation ?? this.designation,
       name: name ?? this.name,
       faceId: faceId ?? this.faceId,
-      imageUrl: imageUrl ?? this.imageUrl,
+      imageUrl: imageUrl ?? imagep,
       createdAt: createdAt ?? this.createdAt,
       email: email ?? this.email,
       contact: contact ?? this.contact,
@@ -60,7 +61,7 @@ class Employee {
 
   // Factory constructor to create Employee from Firestore snapshot
   factory Employee.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+      DocumentSnapshot<Map> snapshot) {
     final employeeData = snapshot.data()!;
     return Employee(
       name: employeeData['name'],
@@ -69,7 +70,7 @@ class Employee {
       email: employeeData['email'],
       contact: employeeData['contact'],
       createdAt: employeeData['createdAt'],
-      imageUrl: employeeData['imageUrl'] ?? 'assets/images/user_icon.jpg',
+      imageUrl: NetworkImage(employeeData['imageUrl']!,) ,
       faceId: employeeData['faceId'],
     );
   }

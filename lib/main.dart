@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:camera/camera.dart';
+import 'package:facein/application/attendance_bloc/attendance_bloc_bloc.dart';
+import 'package:facein/application/bloc/employee_fetch_bloc.dart';
 
 import 'package:facein/application/capture_image_cubit/capture_image_cubit.dart';
 
@@ -41,13 +43,20 @@ class MyApp extends StatelessWidget {
           create: (context) => BottomNavigationCubit(),
         ),
         BlocProvider(
-          create: (context) => EmployeeRegistrationBloc(registerEmployee,templateDataSource),
+          create: (context) =>
+              EmployeeRegistrationBloc(registerEmployee, templateDataSource),
         ),
         BlocProvider(
-          create: (context) => FaceScanningBloc(verifyFace),
+          create: (context) => FaceScanningBloc(attendanceUsecase),
         ),
         BlocProvider(
           create: (context) => CaptureImageCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AttendanceBlocBloc(fetchAttendance),
+        ),
+         BlocProvider(
+          create: (context) => EmployeeFetchBloc(fetchAllEmployee),
         ),
       ],
       child: MaterialApp(

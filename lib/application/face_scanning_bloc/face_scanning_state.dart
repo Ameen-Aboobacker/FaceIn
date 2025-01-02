@@ -8,8 +8,8 @@ final class ScanningInitial extends FaceScanningState {}
 final class Scanning extends FaceScanningState {}
 
 final class ScanningSuccess extends FaceScanningState {
-  final Employee employee;
-  ScanningSuccess(this.employee);
+  final VerifyModel verifyModel;
+  ScanningSuccess(this.verifyModel);
 }
 
 final class ScanningFailed extends FaceScanningState {

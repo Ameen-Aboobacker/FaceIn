@@ -9,7 +9,8 @@ class DashboardItem extends StatelessWidget {
       required this.title,
       this.iconSize = 40,
       this.titleSize = 16,
-      this.fontWeight = FontWeight.normal});
+      this.fontWeight = FontWeight.normal,
+      });
 
   final VoidCallback onTap;
   final Color color;

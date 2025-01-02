@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 
-import '../entities/employee_model.dart';
-import '../failures/failures.dart';
-import 'index_face.dart';
-import 'save_details.dart';
-import 'upload_photo.dart';
+import '../../entities/employee_model.dart';
+import '../../failures/failures.dart';
+import '../index_face.dart';
+import '../save_details.dart';
+import '../upload_photo.dart';
 
 class RegisterEmployee {
   final UploadPhoto uploadPhoto;
@@ -25,11 +25,11 @@ class RegisterEmployee {
         (failure) => Left(failure),
         (faceId) async {
           final saveResult = await saveEmployeeDetails(
-            employee.copyWith(imageUrl: imageUrl, faceId: faceId),
+            employee.copyWith(imagep: imageUrl, faceId: faceId),
           );
           return saveResult.fold(
             (failure) => Left(failure),
-            (successMessage) =>const Right(unit), // Return the actual success message
+            (successMessage) =>const Right(unit), 
           );
         },
       ),

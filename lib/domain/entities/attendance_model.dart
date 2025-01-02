@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
 class Attendance {
   final String userId;
   final String date;
-  final String checkIn;
-  final String? checkOut;
+  final Timestamp checkIn;
+  final Timestamp? checkOut;
 
   Attendance({
     required this.userId,
@@ -11,9 +14,10 @@ class Attendance {
     this.checkOut,
   });
 
-  factory Attendance.fromMap(Map<String, dynamic> map) {
+  factory Attendance.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final map = doc.data()!;
     return Attendance(
-      userId: map['userId'],
+      userId: map['employeeId'],
       date: map['date'],
       checkIn: map['checkIn'],
       checkOut: map['checkOut'],
@@ -27,5 +31,13 @@ class Attendance {
       'checkIn': checkIn,
       'checkOut': checkOut,
     };
+  }
+
+  Map<String, String> formatAttendance() {
+    String cin = DateFormat('hh:mm:ss a').format(checkIn.toDate());
+    String out = checkOut != null
+        ? DateFormat('hh:mm:ss a').format(checkOut!.toDate())
+        : 'check out not marked';
+    return {'in': cin, 'out': out};
   }
 }

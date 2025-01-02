@@ -8,7 +8,7 @@ final class RegistrationInitial extends EmployeeRegistrationState {}
 final class RegistrationLoading extends EmployeeRegistrationState {}
 
 final class RegistrationFailure extends EmployeeRegistrationState {
-  final String error;
+  final Failure error;
   RegistrationFailure({required this.error});
 }
 

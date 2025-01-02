@@ -43,7 +43,7 @@ class FirebaseDataSource {
     }
   }
 
-  Future<void> markAttendance(String id) async {
+  Future<Either<Failure, DateTime?>> markAttendance(String id) async {
     DateTime nowdt = DateTime.now();
     final date = DateFormat('dd/MM/yyyy').format(nowdt);
     Timestamp now = Timestamp.fromDate(nowdt);
@@ -62,6 +62,7 @@ class FirebaseDataSource {
         'checkIn': now,
         'checkOut': null,
       });
+      return Right(nowdt);
     } else {
       // Check-out if there's only one previous record (check-in) for the day
       final attendance = querySnapshot.docs.first.data();
@@ -73,25 +74,73 @@ class FirebaseDataSource {
             .update({
           'checkOut': now,
         });
-        // return PunchStatus.CHECK_OUT;
+        return Right(nowdt);
+        // return PunchStaLtus.CHECK_OUT;
       } else {
+        return const Left(Failure.verification('Duplicate Punch'));
         // Duplicate punch if check-out already exists
         //return PunchStatus.DUPLICATE;
       }
     }
   }
 
-  Future<Employee> fetchEmployee(String faceId) async {
-    final snapshot = await firestore
-        .collection('employees')
-        .where('faceId', isEqualTo: faceId)
-        .get();
-    log(snapshot.docs[0].id);
-    final doc = snapshot.docs[0];
-    return Employee.fromSnapshot(doc);
+  Future<Either<Failure, Employee>> fetchEmployee(String faceId) async {
+    log("face:$faceId");
+    try {
+      final snapshot = await firestore
+          .collection('employees')
+          .where('faceId', isEqualTo: faceId)
+          .get();
+      if (snapshot.docs.isEmpty) {
+        return const Left(
+          Failure.firestore(
+              'Employee not Found,try again or contact admin team'),
+        );
+      }
+      final doc = snapshot.docs[0];
+
+      final employee = Employee.fromSnapshot(doc);
+      return Right(employee);
+    } on FirebaseException catch (e) {
+      return Left(Failure.firestore(e.toString()));
+    } catch (e) {
+      return Left(Failure.unexpected(e.toString()));
+    }
   }
 
-  Future<List<Attendance>> fetchAttendance(employeeId) async {
-    return [];
+  Future<Either<Failure, List<Attendance>>> fetchAttendance(
+      employeeId, date) async {
+    try {
+      final snapshot = await firestore
+          .collection('attendance')
+          .where('employeeId', isEqualTo: employeeId)
+          .where('date', isEqualTo: date)
+          .get();
+      final docs = snapshot.docs;
+      log(docs.length.toString());
+      final attendance = docs.map((doc) => Attendance.fromMap(doc)).toList();
+      log('len:${attendance.length}');
+      return Right(attendance);
+    } on FirebaseException catch (e) {
+      log(e.toString());
+      return Left(Failure.firestore(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, List<Employee>>> fetchAllEmployees() async {
+    try {
+      List<Employee> employees = [];
+      final snapshot = await firestore.collection('employees').get();
+      log(snapshot.docs.length.toString());
+      for (DocumentSnapshot<Map> doc in snapshot.docs) {
+        final employee = Employee.fromSnapshot(doc);
+        employees.add(employee);
+      }
+      return Right(employees);
+    } on FirebaseException catch (e) {
+      return Left(Failure.firestore(e.toString()));
+    } catch (e) {
+      return Left(Failure.firestore(e.toString()));
+    }
   }
 }

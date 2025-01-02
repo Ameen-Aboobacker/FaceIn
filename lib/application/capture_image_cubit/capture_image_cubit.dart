@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:facein/core/camera_controllers.dart';
@@ -8,15 +9,18 @@ part 'capture_image_state.dart';
 
 class CaptureImageCubit extends Cubit<CaptureImageState> {
   CaptureImageCubit() : super(CaptureImageInitial());
-   XFile? image;
+  XFile? image;
   Future<void> captureImage() async {
     emit(ImageCapturing());
-   image = await captureController.takePicture();
+    image = await captureController.takePicture();
     emit(ImageCaptured(image!));
   }
-   Future<void> scanImage() async {
+
+  Future<void> scanImage() async {
     emit(ImageCapturing());
-   image = await scanningController.takePicture();
+    await scanningController.startImageStream((image) {
+      log(image.toString());
+    });
     emit(ImageCaptured(image!));
   }
 }

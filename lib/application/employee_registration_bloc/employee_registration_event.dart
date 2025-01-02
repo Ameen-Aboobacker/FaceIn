@@ -8,3 +8,5 @@ final class Registration extends EmployeeRegistrationEvent {
   final XFile? image;
   Registration({required this.employee, required this.image});
 }
+
+final class SampleRegEvent extends EmployeeRegistrationEvent {}

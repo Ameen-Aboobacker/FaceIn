@@ -1,9 +1,11 @@
+import 'package:facein/application/bloc/employee_fetch_bloc.dart';
 import 'package:facein/presentation/employee_details_screen/employees_screen.dart';
 import 'package:facein/presentation/employee_registration_screen/employee_registration.dart';
 import 'package:facein/presentation/face_scanning_screen/face_scanning.dart';
 import 'package:facein/presentation/onboarding/widgets/dashboard_item.dart';
 import 'package:facein/presentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -65,6 +67,7 @@ class OnBoardingScreen extends StatelessWidget {
                   Expanded(
                       child: DashboardItem(
                     onTap: () {
+                      context.read<EmployeeFetchBloc>().add(FetchEmployees());
                       Navigator.push(
                         context,
                         CustomPageRoute(

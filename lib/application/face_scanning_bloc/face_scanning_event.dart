@@ -7,3 +7,4 @@ final class ScanningFace extends FaceScanningEvent {
   //final XFile image;
   ScanningFace();
 }
+final class SampleScan extends FaceScanningEvent{}

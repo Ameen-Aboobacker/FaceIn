@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:facein/core/colors.dart';
+import 'package:facein/domain/failures/failures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
-import '../../../application/capture_image_cubit/capture_image_cubit.dart';
 import '../../../application/employee_registration_bloc/employee_registration_bloc.dart';
 
 import '../../../core/utils.dart/helper.dart';
@@ -43,11 +45,26 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
             content: 'Employee data stored successfully',
           );
         } else if (state is RegistrationFailure) {
-          _showDialog(
-            context,
-            title: 'Failed!',
-            content: 'Employee data storing failed: ${state.error}',
-          );
+          String message = state.error.message;
+          if (state.error is RekognitionFailure) {
+            _showDialog(
+              context,
+              title: 'Rekognition Failure',
+              content: 'Employee data storing failed: $message',
+            );
+          } else if (state.error is UnexpectedFailure) {
+            _showDialog(
+              context,
+              title: 'unexpected',
+              content: 'Employee data storing failed: $message',
+            );
+          } else {
+            _showDialog(
+              context,
+              title: 'Failed!',
+              content: 'Employee data storing failed: $message',
+            );
+          }
         }
       },
       builder: (contxt, state) {
@@ -74,12 +91,28 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
                       'Email', TextInputType.emailAddress, emailController),
                   Helper.buildTextField(
                       'Contact', TextInputType.number, phoneController),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   state is RegistrationLoading
-                      ? const CircularProgressIndicator()
+                      ? const Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(110, 0, 110, 20),
+                              child: Center(
+                                child: LoadingIndicator(
+                                    colors: [
+                                      AppColors.primaryColor,
+                                      Color.fromARGB(255, 140, 169, 220)
+                                    ],
+                                    strokeWidth: 15,
+                                    indicatorType: Indicator.ballRotateChase),
+                              ),
+                            ),
+                            Text('Saving ....')
+                          ],
+                        )
                       : SubmitButtonWidget(
                           onPressed: () {
-                            final name = nameController.text.trim();
+                            /*    final name = nameController.text.trim();
                             final des = idController.text.trim();
                             final email = emailController.text.trim();
                             final contact = phoneController.text.trim();
@@ -93,7 +126,10 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
                               email: email,
                               contact: contact,
                               image: image,
-                            );
+                            );*/
+                            context
+                                .read<EmployeeRegistrationBloc>()
+                                .add(SampleRegEvent());
                           },
                         ),
                 ],
@@ -112,7 +148,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
         context: context,
         builder: (context) {
           final nav = Navigator.of(context);
-          Future.delayed(const Duration(seconds: 1), () {
+          Future.delayed(const Duration(seconds: 3), () {
             log('pop1');
             nav.pop();
           });
