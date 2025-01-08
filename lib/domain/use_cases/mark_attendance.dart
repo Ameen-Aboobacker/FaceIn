@@ -19,7 +19,7 @@ class MarkAttendance {
         },
         (attendanceTime) {
           final newTime =
-              DateFormat('MMMM,dd,yyyy hh:mm').format(attendanceTime!);
+              DateFormat('MMMM-dd-yyyy hh:mm').format(attendanceTime!);
           return Right(newTime);
         },
       );

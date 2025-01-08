@@ -6,7 +6,7 @@ class Employee {
   dynamic imageUrl;
   String faceId;
   final String name;
-  final String? designation;
+  final String designation;
   final String email;
   final String contact;
   final Timestamp? createdAt;
@@ -60,8 +60,7 @@ class Employee {
   }
 
   // Factory constructor to create Employee from Firestore snapshot
-  factory Employee.fromSnapshot(
-      DocumentSnapshot<Map> snapshot) {
+  factory Employee.fromSnapshot(DocumentSnapshot<Map> snapshot) {
     final employeeData = snapshot.data()!;
     return Employee(
       name: employeeData['name'],
@@ -70,15 +69,10 @@ class Employee {
       email: employeeData['email'],
       contact: employeeData['contact'],
       createdAt: employeeData['createdAt'],
-      imageUrl: NetworkImage(employeeData['imageUrl']!,) ,
+      imageUrl: employeeData['imageUrl']!,
       faceId: employeeData['faceId'],
     );
   }
-  bool isEmpty() {
-    return name.isEmpty ||
-        id.isEmpty ||
-        email.isEmpty ||
-        contact.isEmpty ||
-        imageUrl == null;
-  }
+
+  
 }

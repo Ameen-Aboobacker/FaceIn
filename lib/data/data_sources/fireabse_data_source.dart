@@ -16,8 +16,8 @@ class FirebaseDataSource {
 
   FirebaseDataSource(this.storage, this.firestore);
 
-  Future<Either<Failure, String>> uploadPhoto(File photo) async {
-    final ref = storage.ref().child('employees/${photo.hashCode}.jpg');
+  Future<Either<Failure, String>> uploadPhoto(File photo, String path) async {
+    final ref = storage.ref().child('employees/$path.jpg');
     try {
       final task = await ref.putFile(photo);
       final url = await task.ref.getDownloadURL();

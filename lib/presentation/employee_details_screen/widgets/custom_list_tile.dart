@@ -63,7 +63,7 @@ class CustomListTile extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          info.designation!.toUpperCase(),
+                          info.designation.toUpperCase(),
                           style: TextStyle(
                             fontSize: 15,
                             height: 1.2,

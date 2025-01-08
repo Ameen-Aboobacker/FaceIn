@@ -24,7 +24,7 @@ class TemplateDataSource {
 
   static Future<Either<Failure, Unit>> scansSFace() async {
     try {
-      String? a;
+      String a='Ameen';
       String? b;
       final res = await Future.delayed(const Duration(seconds: 1), () {
         b = a;

@@ -17,8 +17,8 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadPhoto(File photo) {
-    return firebaseDataSource.uploadPhoto(photo);
+  Future<Either<Failure, String>> uploadPhoto(File photo,path) {
+    return firebaseDataSource.uploadPhoto(photo,path);
   }
 
   @override

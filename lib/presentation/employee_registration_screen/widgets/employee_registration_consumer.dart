@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
+import '../../../application/capture_image_cubit/capture_image_cubit.dart';
 import '../../../application/employee_registration_bloc/employee_registration_bloc.dart';
 
 import '../../../core/utils.dart/helper.dart';
@@ -33,10 +34,8 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<EmployeeRegistrationBloc, EmployeeRegistrationState>(
       listener: (contxt, state) {
-        if (state is RegistrationLoading) {
-          clearTextFields();
-        }
         if (state is RegistrationSuccess) {
+          clearTextFields();
           log(state.employee.toJson().toString());
 
           _showDialog(
@@ -45,6 +44,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
             content: 'Employee data stored successfully',
           );
         } else if (state is RegistrationFailure) {
+          clearTextFields();
           String message = state.error.message;
           if (state.error is RekognitionFailure) {
             _showDialog(
@@ -112,7 +112,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
                         )
                       : SubmitButtonWidget(
                           onPressed: () {
-                            /*    final name = nameController.text.trim();
+                            final name = nameController.text.trim();
                             final des = idController.text.trim();
                             final email = emailController.text.trim();
                             final contact = phoneController.text.trim();
@@ -126,10 +126,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
                               email: email,
                               contact: contact,
                               image: image,
-                            );*/
-                            context
-                                .read<EmployeeRegistrationBloc>()
-                                .add(SampleRegEvent());
+                            );
                           },
                         ),
                 ],

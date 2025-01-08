@@ -10,8 +10,8 @@ class UploadPhoto {
 
   UploadPhoto(this.employeeRepository);
 
-  Future<Either<Failure,String>> call(File photo) async {
-    return await employeeRepository.uploadPhoto(photo);
+  Future<Either<Failure,String>> call(File photo,String path) async {
+    return await employeeRepository.uploadPhoto(photo,path);
   }
 }
 

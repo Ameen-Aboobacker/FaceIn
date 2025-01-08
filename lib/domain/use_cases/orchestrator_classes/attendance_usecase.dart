@@ -27,9 +27,10 @@ class AttendanceUsecase {
       final employee = await fetchSingleEmployee(success);
       log(employee.toString());
       return employee.fold((failure) {
-       
         return Left(failure);
       }, (success) async {
+        VerifyModel verifyModel = VerifyModel(
+            id: success.id, name: success.name, image: success.imageUrl);
         final time = await markAttendance(success.id);
 
         return time.fold(
@@ -38,7 +39,9 @@ class AttendanceUsecase {
             return Left(fail);
           },
           (attendanceTime) {
-            return Right(VerifyModel(success, attendanceTime));
+            log(attendanceTime);
+            verifyModel = verifyModel.copyWith(time: attendanceTime);
+            return Right(verifyModel);
           },
         );
       });

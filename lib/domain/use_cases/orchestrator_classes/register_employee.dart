@@ -16,23 +16,25 @@ class RegisterEmployee {
   RegisterEmployee(this.uploadPhoto, this.indexFace, this.saveEmployeeDetails);
 
   Future<Either<Failure, Unit>> call(Employee employee, File photo) async {
-   final imageUrlResult = await uploadPhoto(photo);
+    final imageUrlResult = await uploadPhoto(photo, employee.id);
     final faceIdResult = await indexFace(photo);
 
     return imageUrlResult.fold(
       (failure) => Left(failure),
-      (imageUrl) => faceIdResult.fold(
-        (failure) => Left(failure),
-        (faceId) async {
-          final saveResult = await saveEmployeeDetails(
-            employee.copyWith(imagep: imageUrl, faceId: faceId),
-          );
-          return saveResult.fold(
-            (failure) => Left(failure),
-            (successMessage) =>const Right(unit), 
-          );
-        },
-      ),
+      (imageUrl) {
+        return faceIdResult.fold(
+          (failure) => Left(failure),
+          (faceId) async {
+            final saveResult = await saveEmployeeDetails(
+              employee.copyWith(imagep: imageUrl, faceId: faceId),
+            );
+            return saveResult.fold(
+              (failure) => Left(failure),
+              (successMessage) => const Right(unit),
+            );
+          },
+        );
+      },
     );
   }
 }

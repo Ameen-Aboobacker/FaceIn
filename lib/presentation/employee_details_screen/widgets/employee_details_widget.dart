@@ -53,7 +53,7 @@ class EmployeeDetailsWidget extends StatelessWidget {
                       const SizedBox(height: 13),
                       CustomText(label: 'ID:${selectedEmployee.id}'),
                       const SizedBox(height: 13),
-                      CustomText(label: '${selectedEmployee.designation}'),
+                      CustomText(label: selectedEmployee.designation),
                       const SizedBox(height: 13),
                       CustomText(label: selectedEmployee.email),
                       const SizedBox(height: 13),

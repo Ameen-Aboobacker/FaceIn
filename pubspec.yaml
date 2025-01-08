@@ -47,6 +47,7 @@ dependencies:
   build_runner: ^2.4.13
   loading_indicator: ^3.1.1
   image: ^4.0.15
+  image_picker: ^1.1.2
 
 
 dev_dependencies:

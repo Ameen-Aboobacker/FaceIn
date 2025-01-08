@@ -14,7 +14,7 @@ class FaceScanning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<FaceScanningBloc>().add(SampleScan());
+    context.read<FaceScanningBloc>().add(ScanningFace());
     return BlocConsumer<FaceScanningBloc, FaceScanningState>(
       listener: (context, state) {
         if (state is ScanningSuccess) {
@@ -22,24 +22,27 @@ class FaceScanning extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
               verificationBar(verificationData: state.verifyModel));
         } else if (state is ScanningFailed) {
-          if (state.failure is RekognitionFailure) {
+          if (state.failure is RekognitionFailure ||
+              state.failure is FirestoreFailure) {
             showDialog(
               context: context,
               barrierDismissible: false,
               builder: (BuildContext context) {
                 final nav = Navigator.of(context);
-                Future.delayed(const Duration(seconds: 3), () {
+                Future.delayed(const Duration(seconds: 2), () {
                   nav.pop(); // Close the dialog and return a value
                 });
                 return AlertDialog(
                   backgroundColor: Colors.white,
-                  icon: const Icon(Icons.close),
                   shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.red, width: 2),
-                      borderRadius: BorderRadius.circular(8)),
-                  title: const Text('Rekognition Failure'),
-                  titleTextStyle: const TextStyle(fontSize: 22, color: Colors.black),
-                  content: Text(state.failure.message),
+                      side: const BorderSide(color: Colors.red, width: 3),
+                      borderRadius: BorderRadius.circular(12)),
+                  title: const Text('Verification Failed'),
+                  titleTextStyle:
+                      const TextStyle(fontSize: 22, color: Colors.black),
+                  content: Text(
+                    'Employee Not Found.Check with admin or Try again later.',
+                  ),
                 );
               },
             );
@@ -49,8 +52,8 @@ class FaceScanning extends StatelessWidget {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 final nav = Navigator.of(context);
-                Future.delayed(const Duration(seconds: 3), () {
-                  nav.pop(); // Close the dialog and return a value
+                Future.delayed(const Duration(seconds: 2), () {
+                  nav.pop();
                 });
                 return AlertDialog(
                   title: const Text('Failed'),
@@ -75,53 +78,89 @@ class FaceScanning extends StatelessWidget {
 SnackBar verificationBar({
   required VerifyModel verificationData,
 }) {
+  final image = verificationData.getProfileImage();
   const Color color1 = Colors.black;
-  const Color color2 = Color(0xFF206323);
   return SnackBar(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-      ),
-      backgroundColor: Colors.white,
-      margin: const EdgeInsets.only(bottom: 150),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      behavior: SnackBarBehavior.floating,
-      content: Row(
-        children: [
-          CircleAvatar(
-            radius: 60,
-            backgroundImage: verificationData.employee.imageUrl,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: Colors.green.shade600, width: 2),
+      borderRadius: const BorderRadius.all(Radius.circular(20)),
+    ),
+    duration: const Duration(seconds: 5),
+    backgroundColor: Colors.white,
+    margin: const EdgeInsets.only(bottom: 150, left: 20, right: 20),
+    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+    behavior: SnackBarBehavior.floating,
+    content: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 85,
+          width: 85,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.green.shade600, width: 2),
+
+            // border: Border.all()
           ),
-          const SizedBox(width: 30),
-          Column(
+          child: image,
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Verification is\nSuccessfull',
-                style: TextStyle(color: color2, fontSize: 20),
-              ),
-              Text(verificationData.date,
-                  style: const TextStyle(color: color1, fontSize: 13)),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.person),
-                  Text(verificationData.employee.name,
-                      style: const TextStyle(color: color1)),
+                  Text(
+                    'Verification Successfull',
+                    style: TextStyle(
+                        height: 1.1,
+                        color: Colors.green.shade700,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    verificationData.time ?? '',
+                    style: TextStyle(
+                      color: Colors.green.shade700,
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              const SizedBox(height: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.admin_panel_settings_outlined),
-                  Text(verificationData.employee.id,
-                      style: const TextStyle(color: color1)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.person),
+                      Text(
+                        verificationData.name,
+                        style: const TextStyle(color: color1, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.admin_panel_settings_outlined),
+                      Text(verificationData.id,
+                          style: const TextStyle(color: color1, fontSize: 14)),
+                    ],
+                  ),
                 ],
-              ),
+              )
             ],
-          )
-        ],
-      ));
+          ),
+        )
+      ],
+    ),
+  );
 }

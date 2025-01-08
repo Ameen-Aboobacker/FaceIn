@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:facein/data/data_sources/template_data_source.dart';
 
-import 'package:facein/domain/entities/employee_model.dart';
 import 'package:facein/domain/entities/verify_model.dart';
 import 'package:facein/domain/failures/failures.dart';
 import 'package:facein/domain/use_cases/orchestrator_classes/attendance_usecase.dart';
@@ -45,8 +44,12 @@ class FaceScanningBloc extends Bloc<FaceScanningEvent, FaceScanningState> {
         emit(Scanning());
         try {
           final res = await TemplateDataSource.scansSFace();
-          res.fold((l) => emit(ScanningFailed(failure: l)),
-              (r) => emit(ScanningSuccess(sample)));
+          res.fold(
+              (l) => emit(
+                    ScanningFailed(failure: l),
+                  ), (r) {
+            return emit(ScanningSuccess(sample));
+          });
         } catch (e) {
           emit(ScanningFailed(failure: Failure.unexpected(e.toString())));
         }
@@ -55,6 +58,9 @@ class FaceScanningBloc extends Bloc<FaceScanningEvent, FaceScanningState> {
   }
 }
 
-final sampleemp = Employee(
-    name: '', designation: '', email: '', contact: '', createdAt: null);
-final sample = VerifyModel(sampleemp, '02/01/2025');
+final sample = VerifyModel(
+  time: '01-01-2025, 03:16 PM',
+  id: 'AIT100000042',
+  name: 'AMEEN ABOOBACKER',
+  image: const AssetImage('assets/images/user_icon.jpg'),
+);
