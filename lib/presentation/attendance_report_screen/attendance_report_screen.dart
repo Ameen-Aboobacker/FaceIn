@@ -37,7 +37,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen>
                 firstDate: DateTime(2001),
                 lastDate: DateTime.now(),
                 onDateChanged: (value) {
-                  final date = DateFormat('dd/MM/yyyy').format(value);
+                  final date = DateFormat('dd-MM-yyyy').format(value);
                   log(date);
                   log(widget.employee.id);
                   context

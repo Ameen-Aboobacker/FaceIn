@@ -39,7 +39,7 @@ class VerifyModel {
 
   Image getProfileImage() {
     if (image != null) {
-      return Image.memory(fit: BoxFit.contain, image!);
+      return Image.memory(fit: BoxFit.cover, image!);
     } else {
       // Return a placeholder image provider here (e.g., AssetImage)
       return Image.asset('assets/user_icon.jpg');

@@ -72,7 +72,7 @@ class FaceScanning extends StatelessWidget {
           child: CameraPreview(
             scanningController,
             child: state is Scanning
-                ? const Center(child: Text('Processing please wait'))
+                ? const Center(child: CircularProgressIndicator())
                 : null,
           ),
         ));
