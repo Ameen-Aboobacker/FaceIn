@@ -10,6 +10,7 @@ part 'capture_image_state.dart';
 class CaptureImageCubit extends Cubit<CaptureImageState> {
   CaptureImageCubit() : super(CaptureImageInitial());
   XFile? image;
+  bool? isError;
   Future<void> captureImage() async {
     emit(ImageCapturing());
     image = await captureController.takePicture();
@@ -22,5 +23,21 @@ class CaptureImageCubit extends Cubit<CaptureImageState> {
       log(image.toString());
     });
     emit(ImageCaptured(image!));
+  }
+
+  bool checkImage() {
+    if (image == null) {
+      return false;
+    }
+    return true;
+  }
+
+  checkError() {
+    log(isError.toString());
+  }
+
+  changeState() {
+    image = null;
+    emit(CaptureImageInitial());
   }
 }

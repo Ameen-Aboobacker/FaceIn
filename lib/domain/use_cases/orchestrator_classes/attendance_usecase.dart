@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
 import 'package:facein/domain/entities/verify_model.dart';
 import 'package:facein/domain/failures/failures.dart';
 import 'package:facein/domain/use_cases/fetch_employee.dart';
 import 'package:facein/domain/use_cases/verify_face.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import '../mark_attendance.dart';
 
 class AttendanceUsecase {
@@ -29,22 +32,52 @@ class AttendanceUsecase {
       return employee.fold((failure) {
         return Left(failure);
       }, (success) async {
+        final punchTime = DateTime.now();
+        final newTime = DateFormat('MMMM-dd-yyyy hh:mm').format(punchTime);
         VerifyModel verifyModel = VerifyModel(
-            id: success.id, name: success.name, image: success.imageUrl);
-        final time = await markAttendance(success.id);
-
+          id: success.id,
+          name: success.name,
+          image: success.imageUrl,
+          time: newTime,
+        );
+        final time = await markAttendance(success.id, punchTime);
+        final image = await fetchPhoto(success.imageUrl);
         return time.fold(
           (fail) {
             log(fail.toString());
             return Left(fail);
           },
-          (attendanceTime) {
-            log(attendanceTime);
-            verifyModel = verifyModel.copyWith(time: attendanceTime);
-            return Right(verifyModel);
+          (punchType) {
+            return image.fold(
+              (failure) {
+                return Left(failure);
+              },
+              (success) {
+                log(punchType.toString());
+                verifyModel = verifyModel.copyWith(
+                    punchType: punchType, imageUrl: success);
+                return Right(verifyModel);
+              },
+            );
           },
         );
       });
     });
+  }
+}
+
+Future<Either<Failure, Uint8List>> fetchPhoto(String path) async {
+  final storage = FirebaseStorage.instance;
+  final ref = storage.ref().child(path);
+  try {
+    final task = await ref.getData();
+
+    if (task != null) {
+      return Right(task);
+    } else {
+      return const Left(Failure.firestore('image not available'));
+    }
+  } catch (e) {
+    return Left(Failure.firestore(e.toString()));
   }
 }

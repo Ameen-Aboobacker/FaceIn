@@ -12,4 +12,7 @@ final class FetchSuccess extends EmployeeFetchState {
 
 final class FetchLoading extends EmployeeFetchState {}
 
-final class FetchFailed extends EmployeeFetchState {}
+final class FetchFailed extends EmployeeFetchState {
+  final String error;
+  FetchFailed(this.error);
+}

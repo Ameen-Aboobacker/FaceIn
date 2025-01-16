@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:camera/camera.dart';
 import 'package:facein/application/face_scanning_bloc/face_scanning_bloc.dart';
+import 'package:facein/domain/entities/punch_type.dart';
 import 'package:facein/domain/entities/verify_model.dart';
 import 'package:facein/domain/failures/failures.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class FaceScanning extends StatelessWidget {
                   title: const Text('Verification Failed'),
                   titleTextStyle:
                       const TextStyle(fontSize: 22, color: Colors.black),
-                  content: Text(
+                  content: const Text(
                     'Employee Not Found.Check with admin or Try again later.',
                   ),
                 );
@@ -68,7 +69,12 @@ class FaceScanning extends StatelessWidget {
         return Scaffold(
             body: SizedBox(
           height: double.maxFinite,
-          child: CameraPreview(scanningController),
+          child: CameraPreview(
+            scanningController,
+            child: state is Scanning
+                ? const Center(child: Text('Processing please wait'))
+                : null,
+          ),
         ));
       },
     );
@@ -79,6 +85,12 @@ SnackBar verificationBar({
   required VerifyModel verificationData,
 }) {
   final image = verificationData.getProfileImage();
+  final punchType = verificationData.punchType;
+  final type = punchType == PunchType.checkin
+      ? 'Check In'
+      : punchType == PunchType.checkout
+          ? 'Check Out'
+          : 'Duplicate';
   const Color color1 = Colors.black;
   return SnackBar(
     shape: RoundedRectangleBorder(
@@ -124,13 +136,14 @@ SnackBar verificationBar({
                         fontStyle: FontStyle.italic),
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    verificationData.time ?? '',
-                    style: TextStyle(
-                      color: Colors.green.shade700,
-                      fontSize: 14,
-                    ),
-                  ),
+                  RichText(
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.green.shade700,
+                            fontSize: 14,
+                          ),
+                          text: verificationData.time,
+                          children: [TextSpan(text: '\n$type')]))
                 ],
               ),
               const SizedBox(height: 10),

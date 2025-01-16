@@ -1,5 +1,5 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class Employee {
   String id;
@@ -42,7 +42,7 @@ class Employee {
     String? designation,
     String? name,
     String? faceId,
-    dynamic imagep,
+    dynamic imageUrl,
     Timestamp? createdAt,
     String? email,
     String? contact,
@@ -52,7 +52,7 @@ class Employee {
       designation: designation ?? this.designation,
       name: name ?? this.name,
       faceId: faceId ?? this.faceId,
-      imageUrl: imageUrl ?? imagep,
+      imageUrl: imageUrl ?? this.imageUrl,
       createdAt: createdAt ?? this.createdAt,
       email: email ?? this.email,
       contact: contact ?? this.contact,
@@ -69,10 +69,8 @@ class Employee {
       email: employeeData['email'],
       contact: employeeData['contact'],
       createdAt: employeeData['createdAt'],
-      imageUrl: employeeData['imageUrl']!,
+      imageUrl: employeeData['imageUrl'],
       faceId: employeeData['faceId'],
     );
   }
-
-  
 }

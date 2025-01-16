@@ -19,12 +19,12 @@ class FaceScanningBloc extends Bloc<FaceScanningEvent, FaceScanningState> {
   final AttendanceUsecase attendanceUsecase;
   FaceScanningBloc(this.attendanceUsecase) : super(ScanningInitial()) {
     on<ScanningFace>((event, emit) async {
-      emit(Scanning());
       XFile image;
-      try {
-        image = await scanningController.takePicture();
+      image = await scanningController.takePicture();
 
-        final photo = File(image.path);
+      final photo = File(image.path);
+      emit(Scanning());
+      try {
         final employee = await attendanceUsecase(photo);
 
         employee.fold((fail) {

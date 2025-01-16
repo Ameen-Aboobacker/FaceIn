@@ -1,8 +1,9 @@
-import 'dart:developer';
 
+import 'package:facein/application/capture_image_cubit/capture_image_cubit.dart';
 import 'package:facein/core/camera_controllers.dart';
 import 'package:facein/core/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'camera_screen.dart';
 import 'widgets/employee_registration_consumer.dart';
@@ -12,40 +13,42 @@ class EmployeeRegistration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.primaryColor,
-        surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        centerTitle: true,
-        title: const Text('Employee Details'),
-      ),
-      body: EmployeeRegistrationBlocConsumer(
-        onTap: () {
-          log('ssss');
-          FocusScope.of(context).unfocus();
-        },
-      /*  formKey: formKey,
-        nameController: nameController,
-        idController: idController,
-        emailController: emailController,
-        phoneController: phoneController,*/
-        onCapture: () async {
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
-          final nav = Navigator.of(context);
-          await captureController.initialize();
-          scaffoldMessenger.showSnackBar(
-              customSnackbar(content: const Text('Wait for 5 seconds')));
-          await nav.push(
-            MaterialPageRoute(
-              builder: (context) => const CameraScreen(),
-            ),
-          );
-        },
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        context.read<CaptureImageCubit>().changeState();
+        imageFieldNotifier.value = false;
+      },   
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: AppColors.primaryColor,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          centerTitle: true,
+          title: const Text('Employee Details'),
+        ),
+        body: EmployeeRegistrationBlocConsumer(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          onCapture: () async {
+            final scaffoldMessenger = ScaffoldMessenger.of(context);
+            final nav = Navigator.of(context);
+            await captureController.initialize();
+            scaffoldMessenger.showSnackBar(
+              customSnackbar(
+                content: const Text('Wait for 5 seconds'),
+              ),
+            );
+            await nav.push(
+              MaterialPageRoute(
+                builder: (context) => const CameraScreen(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

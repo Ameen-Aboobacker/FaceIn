@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../entities/employee_model.dart';
@@ -15,7 +15,7 @@ class RegisterEmployee {
 
   RegisterEmployee(this.uploadPhoto, this.indexFace, this.saveEmployeeDetails);
 
-  Future<Either<Failure, Unit>> call(Employee employee, File photo) async {
+  Future<Either<Failure, Unit>> call(Employee employee, XFile photo) async {
     final imageUrlResult = await uploadPhoto(photo, employee.id);
     final faceIdResult = await indexFace(photo);
 
@@ -26,7 +26,7 @@ class RegisterEmployee {
           (failure) => Left(failure),
           (faceId) async {
             final saveResult = await saveEmployeeDetails(
-              employee.copyWith(imagep: imageUrl, faceId: faceId),
+              employee.copyWith(imageUrl: imageUrl, faceId: faceId),
             );
             return saveResult.fold(
               (failure) => Left(failure),

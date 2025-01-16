@@ -15,7 +15,7 @@ class EmployeeFetchBloc extends Bloc<EmployeeFetchEvent, EmployeeFetchState> {
       final res = await fetchAllEmployee();
       res.fold(
         (fail) {
-          emit(FetchFailed());
+          emit(FetchFailed(fail.message));
         },
         (success) {
           emit(FetchSuccess(success));

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:dartz/dartz.dart';
 import 'package:facein/data/data_sources/aws_rekognition_data_source.dart';
 
@@ -11,7 +12,7 @@ class FaceRekognitionRepositoryImpl implements FaceRekognitionRepository {
 
   FaceRekognitionRepositoryImpl(this.awsRekognitionDataSource);
   @override
-  Future<Either<Failure,String>> indexFace(File photo) {
+  Future<Either<Failure,String>> indexFace(XFile photo) {
     return awsRekognitionDataSource.indexFace(photo);
   }
 

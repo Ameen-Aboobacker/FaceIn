@@ -30,7 +30,7 @@ class _AnimatedScaffoldState extends State<AnimatedScaffold>
     _controller.forward();
 
     Timer(const Duration(milliseconds: 5200), () {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         CustomPageRoute(page: const OnBoardingScreen()),
       );
     });

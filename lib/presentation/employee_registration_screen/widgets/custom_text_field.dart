@@ -21,6 +21,20 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         keyboardType: keyboardType,
         controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Field required';
+          } else if (label == 'Name' && value.length < 3) {
+            return 'Enter a Valid name';
+          } else if (label == 'Designation' && value.length < 3) {
+            return 'Enter a Valid designation';
+          } else if (label == 'Email' && value.length < 3) {
+            return 'Enter a Valid mail';
+          } else if (label == 'Contact' && value.length != 10) {
+            return 'Enter a Valid Contact number';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           prefixText: contact ? '+91' : null,
           prefixStyle:
@@ -29,6 +43,10 @@ class CustomTextField extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           labelStyle: const TextStyle(color: AppColors.primaryColor),
+          errorBorder: OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: AppColors.primaryColor, width: 1),
+              borderRadius: BorderRadius.circular(10)),
           focusedBorder: OutlineInputBorder(
               borderSide:
                   const BorderSide(color: AppColors.primaryColor, width: 1),

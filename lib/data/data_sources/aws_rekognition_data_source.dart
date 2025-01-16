@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aws_rekognition_api/rekognition-2016-06-27.dart';
+import 'package:camera/camera.dart';
 import 'package:dartz/dartz.dart';
 import 'package:facein/domain/failures/failures.dart';
 
@@ -10,7 +11,7 @@ class AwsRekognitionDataSource {
 
   AwsRekognitionDataSource(this.rekognition);
 
-  Future<Either<Failure, String>> indexFace(File photo) async {
+  Future<Either<Failure, String>> indexFace(XFile photo) async {
     Uint8List imageBytes = await photo.readAsBytes();
     try {
       final response = await rekognition.indexFaces(

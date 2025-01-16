@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +23,7 @@ class EmployeeRegistrationBloc
     on<Registration>((event, emit) async {
       emit(RegistrationLoading());
       try {
-        final photo = File(event.image!.path);
+        final photo = event.image!;
         final res = await registerEmployee(event.employee, photo);
         log(event.employee.toJson().toString());
 
@@ -34,6 +33,7 @@ class EmployeeRegistrationBloc
           emit(RegistrationSuccess(event.employee));
         });
       } catch (e) {
+        log(e.toString());
         emit(
           RegistrationFailure(
             error: Failure.unexpected(

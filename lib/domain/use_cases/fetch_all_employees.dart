@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:facein/domain/repositories/employee_repository.dart';
 
@@ -9,7 +11,8 @@ class FetchAllEmployees {
   FetchAllEmployees(this.employeeRepository);
   Future<Either<Failure, List<Employee>>> call() async {
     final res = await employeeRepository.getEmployees();
-   return  res.fold((failure) {
+    return res.fold((failure) {
+      log('usecasefail:${failure.message}');
       return Left(failure);
     }, (success) {
       return Right(success);

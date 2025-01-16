@@ -17,6 +17,7 @@ class CustomListTile extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    log(info.imageUrl.toString());
     Color tcolor = Colors.white;
     return Container(
       height: 180,
@@ -42,7 +43,7 @@ class CustomListTile extends StatelessWidget {
                             log('imgexception');
                           },
                           fit: BoxFit.fill,
-                          image: info.imageUrl),
+                          image: MemoryImage(info.imageUrl)),
                     ),
                   ),
                 Expanded(
@@ -135,7 +136,7 @@ class CustomListTile extends StatelessWidget {
                       border: Border.all(color: Colors.white, width: 2),
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                          fit: BoxFit.fill, image: info.imageUrl),
+                          fit: BoxFit.fill, image: MemoryImage(info.imageUrl)),
                     ),
                   ),
               ],

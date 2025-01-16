@@ -8,7 +8,6 @@ import 'package:facein/presentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../sample_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -74,7 +73,7 @@ class OnBoardingScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         CustomPageRoute(
-                          page: const SampleScreen(),
+                          page: const EmployeesScreen(),
                         ),
                       );
                     },

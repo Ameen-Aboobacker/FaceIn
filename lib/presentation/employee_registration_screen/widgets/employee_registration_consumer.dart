@@ -15,6 +15,8 @@ import '../../widgets/submit_button_widget.dart';
 
 import 'take_photo_widget.dart';
 
+ValueNotifier<bool> imageFieldNotifier = ValueNotifier(false);
+
 class EmployeeRegistrationBlocConsumer extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey();
   final TextEditingController nameController = TextEditingController();
@@ -70,7 +72,7 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
       builder: (contxt, state) {
         return GestureDetector(
           onTap: () {
-            log('ss]b');
+            log('ssb');
 
             FocusScope.of(context).unfocus();
           },
@@ -81,8 +83,10 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  TakePhotoWidget(onTake: onCapture),
-                  const SizedBox(height: 20),
+                  TakePhotoWidget(
+                    onTake: onCapture,
+                  ),
+                  const SizedBox(height: 10),
                   Helper.buildTextField(
                       'Name', TextInputType.text, nameController),
                   Helper.buildTextField(
@@ -110,25 +114,24 @@ class EmployeeRegistrationBlocConsumer extends StatelessWidget {
                             Text('Saving ....')
                           ],
                         )
-                      : SubmitButtonWidget(
-                          onPressed: () {
-                            final name = nameController.text.trim();
-                            final des = idController.text.trim();
-                            final email = emailController.text.trim();
-                            final contact = phoneController.text.trim();
-                            final image =
-                                context.read<CaptureImageCubit>().image;
-
+                      : SubmitButtonWidget(onPressed: () {
+                          final image = context.read<CaptureImageCubit>();
+                          log(image.checkImage().toString());
+                          if (formKey.currentState!.validate() &&
+                              image.checkImage()) {
                             Helper.handleSubmit(
                               context,
-                              name: name,
-                              des: des,
-                              email: email,
-                              contact: contact,
-                              image: image,
+                              name: nameController.text.trim(),
+                              des: idController.text.trim(),
+                              email: emailController.text.trim(),
+                              contact: phoneController.text.trim(),
+                              image: image.image,
                             );
-                          },
-                        ),
+                          } else if (image.checkImage() == false) {
+                            log('elseif:${imageFieldNotifier.value.toString()}');
+                            imageFieldNotifier.value = true;
+                          }
+                        }),
                 ],
               ),
             ),

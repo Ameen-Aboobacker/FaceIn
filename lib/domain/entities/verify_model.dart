@@ -5,11 +5,13 @@ class VerifyModel {
   String id;
   dynamic image;
   String? time;
+  Enum? punchType;
   VerifyModel({
     required this.id,
     required this.name,
     required this.image,
-    this.time,
+    required this.time,
+    this.punchType,
   });
 
   VerifyModel copyWith({
@@ -17,13 +19,14 @@ class VerifyModel {
     String? name,
     dynamic imageUrl,
     String? time,
+    Enum? punchType,
   }) {
     return VerifyModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      image: imageUrl ?? image,
-      time: time ?? this.time,
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        image: imageUrl ?? image,
+        time: time ?? this.time,
+        punchType: punchType ?? this.punchType);
   }
 
   toMap() {
@@ -36,7 +39,7 @@ class VerifyModel {
 
   Image getProfileImage() {
     if (image != null) {
-      return Image.network(fit: BoxFit.contain, image!);
+      return Image.memory(fit: BoxFit.contain, image!);
     } else {
       // Return a placeholder image provider here (e.g., AssetImage)
       return Image.asset('assets/user_icon.jpg');

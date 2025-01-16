@@ -49,6 +49,8 @@ class EmployeeListWidget extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 15),
             itemCount: employeesData.length,
           );
+        } else if (state is FetchFailed) {
+          return SizedBox(child: Text(state.error));
         }
         return const SizedBox(child: Text('not loading not success'));
       },

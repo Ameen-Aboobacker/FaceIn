@@ -11,8 +11,8 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   AttendanceRepositoryImpl(this.firebaseDataSource);
 
   @override
-  Future<Either<Failure,DateTime?>>  markAttendance(String employeeId) {
-    return firebaseDataSource.markAttendance(employeeId);
+  Future<Either<Failure,Enum>>  markAttendance(String employeeId,DateTime date) {
+    return firebaseDataSource.markAttendance(employeeId,date);
   }
 
   @override

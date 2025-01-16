@@ -1,8 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:facein/domain/entities/punch_type.dart';
+import 'package:facein/domain/use_cases/orchestrator_classes/attendance_usecase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 
@@ -20,8 +23,24 @@ class FirebaseDataSource {
     final ref = storage.ref().child('employees/$path.jpg');
     try {
       final task = await ref.putFile(photo);
-      final url = await task.ref.getDownloadURL();
+      final url = task.ref.fullPath;
+      log('url:$url');
       return Right(url);
+    } catch (e) {
+      return Left(Failure.firestore(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, Uint8List>> fetchPhotos(String path) async {
+    final ref = storage.ref().child(path);
+    try {
+      final task = await ref.getData();
+
+      if (task != null) {
+        return Right(task);
+      } else {
+        return const Left(Failure.firestore('image not available'));
+      }
     } catch (e) {
       return Left(Failure.firestore(e.toString()));
     }
@@ -43,10 +62,10 @@ class FirebaseDataSource {
     }
   }
 
-  Future<Either<Failure, DateTime?>> markAttendance(String id) async {
-    DateTime nowdt = DateTime.now();
-    final date = DateFormat('dd/MM/yyyy').format(nowdt);
-    Timestamp now = Timestamp.fromDate(nowdt);
+  Future<Either<Failure, Enum>> markAttendance(String id, DateTime time) async {
+    final date = DateFormat('dd-MM-yyyy').format(time);
+
+    Timestamp now = Timestamp.fromDate(time);
     final attendanceRef = firestore
         .collection('attendance')
         .where('employeeId', isEqualTo: id)
@@ -62,7 +81,7 @@ class FirebaseDataSource {
         'checkIn': now,
         'checkOut': null,
       });
-      return Right(nowdt);
+      return const Right(PunchType.checkin);
     } else {
       // Check-out if there's only one previous record (check-in) for the day
       final attendance = querySnapshot.docs.first.data();
@@ -74,10 +93,10 @@ class FirebaseDataSource {
             .update({
           'checkOut': now,
         });
-        return Right(nowdt);
+        return const Right(PunchType.checkout);
         // return PunchStaLtus.CHECK_OUT;
       } else {
-        return const Left(Failure.verification('Duplicate Punch'));
+        return const Right(PunchType.duplicate);
         // Duplicate punch if check-out already exists
         //return PunchStatus.DUPLICATE;
       }
@@ -133,7 +152,20 @@ class FirebaseDataSource {
       final snapshot = await firestore.collection('employees').get();
       log(snapshot.docs.length.toString());
       for (DocumentSnapshot<Map> doc in snapshot.docs) {
-        final employee = Employee.fromSnapshot(doc);
+        Employee employee = Employee.fromSnapshot(doc);
+       
+
+        final image = await fetchPhoto(employee.imageUrl);
+
+        image.fold((fail) {
+          log(fail.message);
+          return Left(fail);
+        }, (success) {
+          //log(success.toString());
+          employee = employee.copyWith(imageUrl: success);
+
+        
+        });
         employees.add(employee);
       }
       return Right(employees);
