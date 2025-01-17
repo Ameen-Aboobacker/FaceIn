@@ -97,7 +97,7 @@ SnackBar verificationBar({
       side: BorderSide(color: Colors.green.shade600, width: 2),
       borderRadius: const BorderRadius.all(Radius.circular(20)),
     ),
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 3),
     backgroundColor: Colors.white,
     margin: const EdgeInsets.only(bottom: 150, left: 20, right: 20),
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -110,12 +110,14 @@ SnackBar verificationBar({
           width: 85,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.green.shade600, width: 2),
-
-            // border: Border.all()
-          ),
-          child: image,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.green.shade600, width: 2),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: image,
+              )
+              // border: Border.all()
+              ),
         ),
         const SizedBox(width: 20),
         Expanded(

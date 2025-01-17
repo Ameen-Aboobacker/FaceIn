@@ -37,12 +37,12 @@ class VerifyModel {
     };
   }
 
-  Image getProfileImage() {
+  ImageProvider getProfileImage() {
     if (image != null) {
-      return Image.memory(fit: BoxFit.cover, image!);
+      return MemoryImage(image!);
     } else {
       // Return a placeholder image provider here (e.g., AssetImage)
-      return Image.asset('assets/user_icon.jpg');
+      return const AssetImage('assets/user_icon.jpg');
     }
   }
 }

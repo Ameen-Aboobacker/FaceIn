@@ -3,11 +3,9 @@ import 'package:facein/presentation/employee_details_screen/employees_screen.dar
 import 'package:facein/presentation/employee_registration_screen/employee_registration.dart';
 import 'package:facein/presentation/face_scanning_screen/face_scanning.dart';
 import 'package:facein/presentation/onboarding/widgets/dashboard_item.dart';
-//import 'package:facein/presentation/sample_screen.dart';
 import 'package:facein/presentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
